@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../entities/transaction.dart';
 import '../entities/user.dart';
 import '../services/shared_services.dart';
 import '../model/user_model.dart';
@@ -110,6 +111,12 @@ class UserServices extends IsarServices {
 
     showUser();
     isar.writeTxn(() async {
+      await isar.transactions
+          .filter()
+          .user(
+            (q) => q.idEqualTo(userId!),
+          )
+          .deleteAll();
       await isar.users.delete(userId!);
     });
     sharedServices.deleteCacheUser();

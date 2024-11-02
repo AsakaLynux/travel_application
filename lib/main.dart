@@ -23,7 +23,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  // deleteData();
+  deleteData();
   initializeData();
   runApp(
     ChangeNotifierProvider(
@@ -63,10 +63,10 @@ class MyApp extends StatelessWidget {
 
 void initializeData() {
   UserServices userServices = UserServices();
-  userServices.insertUser();
   DestinationServices destinationServices = DestinationServices();
-  destinationServices.insertDestination();
   TransactionServices transactionServices = TransactionServices();
+  userServices.insertUser();
+  destinationServices.insertDestination();
   transactionServices.insertTransaction();
 }
 

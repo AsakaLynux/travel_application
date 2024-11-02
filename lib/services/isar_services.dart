@@ -35,13 +35,21 @@ class IsarServices {
 
   Future<void> deleteAllData() async {
     final isar = await db;
+    final adminExist = await isar.users
+        .filter()
+        .nameEqualTo("admin")
+        .and()
+        .emailEqualTo("admin@admin.com")
+        .findAll();
 
-    await isar.writeTxn(
-      () async {
-        await isar.users.where().deleteAll();
-        await isar.destinations.where().deleteAll();
-        await isar.transactions.where().deleteAll();
-      },
-    );
+    if (adminExist.isEmpty) {
+      await isar.writeTxn(
+        () async {
+          await isar.users.where().deleteAll();
+          await isar.destinations.where().deleteAll();
+          await isar.transactions.where().deleteAll();
+        },
+      );
+    }
   }
 }
