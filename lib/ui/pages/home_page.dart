@@ -248,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Text(
-                                  "irfan",
+                                  snapshot.data!.name,
                                   style: whiteTextStyle.copyWith(
                                     fontSize: 20,
                                     fontWeight: medium,
@@ -294,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            formatRupiah.format(1000000),
+                            formatRupiah.format(snapshot.data!.wallet),
                             style: whiteTextStyle.copyWith(
                               fontSize: 26,
                               fontWeight: medium,
