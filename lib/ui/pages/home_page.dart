@@ -504,6 +504,9 @@ class _HomePageState extends State<HomePage> {
                                     hobbyController.text,
                                   );
                                   if (updateUser) {
+                                    if (context.mounted) {
+                                      Navigator.pop(context);
+                                    }
                                     userServices.showUser();
                                     return Fluttertoast.showToast(
                                       msg: "Success Update Account",
