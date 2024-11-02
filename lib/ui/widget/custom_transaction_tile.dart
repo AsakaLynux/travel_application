@@ -21,8 +21,9 @@ class CustomTransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(bottom: 10),
       width: 327,
-      height: 90,
+      height: 110,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: kWhiteColor,
@@ -34,8 +35,8 @@ class CustomTransactionTile extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 70,
-                  height: 70,
+                  width: 80,
+                  height: 80,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
                       image: DecorationImage(
@@ -54,27 +55,25 @@ class CustomTransactionTile extends StatelessWidget {
                         fontWeight: medium,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          location,
-                          style: greyTextStyle.copyWith(
-                            fontSize: 14,
-                            fontWeight: light,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          "Seat: $seat",
-                          style: greyTextStyle.copyWith(
-                            fontSize: 14,
-                            fontWeight: light,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      location,
+                      style: greyTextStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: light,
+                      ),
                     ),
                     Text(
-                      "GrandTotal: $grandTotal",
+                      "Seat: $seat",
+                      style: greyTextStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: light,
+                      ),
+                      // overflow: TextOverflow.clip,
+                    ),
+                    Text(
+                      "GrandTotal: ${formatRupiah.format(
+                        grandTotal,
+                      )}",
                       style: greyTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: light,

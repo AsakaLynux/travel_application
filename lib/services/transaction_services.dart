@@ -86,16 +86,18 @@ class TransactionServices extends IsarServices {
         )
         .findAll();
 
-    for (var transaction in existTransaction) {
-      if (kDebugMode) {
+    if (kDebugMode) {
+      for (var transaction in allTransaction) {
         print(
-            "Exist Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}");
+            "All Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}");
       }
-    }
-    for (var transaction in allTransaction) {
-      if (kDebugMode) {
+
+      if (existTransaction.isEmpty) {
+        print("There is no transaction data for this account");
+      }
+      for (var transaction in existTransaction) {
         print(
-            "All Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}");
+            "Exist Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}");
       }
     }
   }

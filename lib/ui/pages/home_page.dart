@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -239,7 +238,7 @@ class _HomePageState extends State<HomePage> {
               return const Text("No Data");
             } else {
               return Container(
-                margin: const EdgeInsets.only(top: 40),
+                margin: const EdgeInsets.only(top: 20),
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
@@ -340,9 +339,6 @@ class _HomePageState extends State<HomePage> {
               } else if (!snapshot.hasData || snapshot.data == null) {
                 return const Text("No Data");
               } else {
-                if (kDebugMode) {
-                  print("Transaction: ${snapshot.data!.length}");
-                }
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: snapshot.data!.length,
@@ -352,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                     name: snapshot.data![index]!.destination.value!.name,
                     location:
                         snapshot.data![index]!.destination.value!.location,
-                    seat: snapshot.data![index]!.selectedSeat.length.toString(),
+                    seat: snapshot.data![index]!.selectedSeat,
                     grandTotal: snapshot.data![index]!.grandTotal,
                   ),
                 );
@@ -369,6 +365,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               wallet(),
+              const SizedBox(height: 10),
               Text(
                 "History",
                 style: blackTextStyle.copyWith(
@@ -376,6 +373,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: semiBold,
                 ),
               ),
+              const SizedBox(height: 10),
               listTransaction(),
             ],
           ),
