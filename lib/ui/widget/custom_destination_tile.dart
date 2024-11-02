@@ -19,6 +19,7 @@ class DestinationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(bottom: 10),
       width: 327,
       height: 90,
       decoration: BoxDecoration(
