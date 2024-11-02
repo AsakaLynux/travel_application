@@ -35,7 +35,7 @@ const TransactionSchema = CollectionSchema(
     r'grandTotal': PropertySchema(
       id: 3,
       name: r'grandTotal',
-      type: IsarType.long,
+      type: IsarType.double,
     ),
     r'insurance': PropertySchema(
       id: 4,
@@ -123,7 +123,7 @@ void _transactionSerialize(
   writer.writeLong(offsets[0], object.amountOfTraveler);
   writer.writeDateTime(offsets[1], object.createAt);
   writer.writeString(offsets[2], object.createBy);
-  writer.writeLong(offsets[3], object.grandTotal);
+  writer.writeDouble(offsets[3], object.grandTotal);
   writer.writeBool(offsets[4], object.insurance);
   writer.writeLong(offsets[5], object.price);
   writer.writeBool(offsets[6], object.refundable);
@@ -143,7 +143,7 @@ Transaction _transactionDeserialize(
   object.amountOfTraveler = reader.readLong(offsets[0]);
   object.createAt = reader.readDateTime(offsets[1]);
   object.createBy = reader.readString(offsets[2]);
-  object.grandTotal = reader.readLong(offsets[3]);
+  object.grandTotal = reader.readDouble(offsets[3]);
   object.id = id;
   object.insurance = reader.readBool(offsets[4]);
   object.price = reader.readLong(offsets[5]);
@@ -169,7 +169,7 @@ P _transactionDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 4:
       return (reader.readBool(offset)) as P;
     case 5:
@@ -532,49 +532,58 @@ extension TransactionQueryFilter
   }
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
-      grandTotalEqualTo(int value) {
+      grandTotalEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'grandTotal',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       grandTotalGreaterThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'grandTotal',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       grandTotalLessThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'grandTotal',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       grandTotalBetween(
-    int lower,
-    int upper, {
+    double lower,
+    double upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -583,6 +592,7 @@ extension TransactionQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        epsilon: epsilon,
       ));
     });
   }
@@ -1523,7 +1533,7 @@ extension TransactionQueryProperty
     });
   }
 
-  QueryBuilder<Transaction, int, QQueryOperations> grandTotalProperty() {
+  QueryBuilder<Transaction, double, QQueryOperations> grandTotalProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'grandTotal');
     });

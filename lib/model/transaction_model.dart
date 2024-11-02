@@ -5,7 +5,7 @@ class TransactionModel {
   final bool refundable;
   final double vat;
   final int price;
-  final int grandTotal;
+  final double grandTotal;
   final String createBy;
   final DateTime createAt;
   final String updateBy;
@@ -18,7 +18,7 @@ class TransactionModel {
     this.refundable = false,
     this.vat = 0.0,
     this.price = 0,
-    this.grandTotal = 0,
+    this.grandTotal = 0.0,
     this.createBy = "",
     DateTime? createAt,
     this.updateBy = "",

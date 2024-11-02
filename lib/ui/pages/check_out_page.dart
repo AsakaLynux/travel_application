@@ -28,7 +28,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   late bool refundable;
   late double vat;
   late int price;
-  late int grandTotal;
+  late double grandTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     builder: (context, value, child) {
                       price = snapshot.data!.price * value.seatNumber.length;
                       double vat = price * 0.45;
-                      grandTotal = (price + vat) as int;
+                      grandTotal = (price + vat);
                       return Column(
                         children: [
                           transactionDetails(

@@ -341,7 +341,7 @@ class _HomePageState extends State<HomePage> {
                 return const Text("No Data");
               } else {
                 if (kDebugMode) {
-                  print(snapshot.data!.length);
+                  print("Transaction: ${snapshot.data!.length}");
                 }
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),

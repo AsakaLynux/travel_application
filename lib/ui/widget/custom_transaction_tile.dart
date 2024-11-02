@@ -7,7 +7,7 @@ class CustomTransactionTile extends StatelessWidget {
   final String name;
   final String location;
   final String seat;
-  final int grandTotal;
+  final double grandTotal;
   const CustomTransactionTile({
     super.key,
     required this.imageUrl,

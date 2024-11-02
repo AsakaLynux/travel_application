@@ -76,56 +76,27 @@ class TransactionServices extends IsarServices {
 
   Future<void> showTransaction() async {
     final isar = await db;
-    final existTransaction = await isar.transactions.where().findAll();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int? userId = prefs.getInt("userId");
+    final allTransaction = await isar.transactions.where().findAll();
+    final existTransaction = await isar.transactions
+        .filter()
+        .user(
+          (q) => q.idEqualTo(userId!),
+        )
+        .findAll();
+
     for (var transaction in existTransaction) {
       if (kDebugMode) {
-        if (transaction.user.value != null ||
-            transaction.destination.value != null) {
-          print(
-              "user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}");
-        } else {
-          print("No data");
-        }
+        print(
+            "Exist Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}");
       }
     }
-
-    Future<void> addTransaction(
-      int amountOfTraveler,
-      String selectedSeat,
-      bool insurance,
-      bool refundable,
-      double vat,
-      int price,
-      int grandTotal,
-      Id destinationId,
-    ) async {
-      UserServices userServices = UserServices();
-      DestinationServices destinationServices = DestinationServices();
-      final isar = await db;
-      final getUser = await userServices.getUser();
-      final getDestination =
-          await destinationServices.getDestinationDetail(destinationId);
-      final transaction = Transaction()
-        ..amountOfTraveler = amountOfTraveler
-        ..selectedSeat = selectedSeat
-        ..insurance = insurance
-        ..refundable = refundable
-        ..vat = vat
-        ..price = price
-        ..grandTotal = grandTotal
-        ..createBy = getUser!.name
-        ..createAt = DateTime.now()
-        ..updateBy = getUser.name
-        ..updateAt = DateTime.now()
-        ..user.value = getUser
-        ..destination.value = getDestination;
-      await isar.writeTxn(
-        () async {
-          await isar.transactions.put(transaction);
-          await transaction.user.save();
-          await transaction.destination.save();
-        },
-      );
+    for (var transaction in allTransaction) {
+      if (kDebugMode) {
+        print(
+            "All Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}");
+      }
     }
   }
 
@@ -136,7 +107,7 @@ class TransactionServices extends IsarServices {
     bool refundable,
     double vat,
     int price,
-    int grandTotal,
+    double grandTotal,
     Id destinationId,
   ) async {
     UserServices userServices = UserServices();
@@ -166,6 +137,7 @@ class TransactionServices extends IsarServices {
         await transaction.destination.save();
       },
     );
+    showTransaction();
     return true;
   }
 }

@@ -14,7 +14,7 @@ class Transaction {
   late bool refundable;
   late double vat;
   late int price;
-  late int grandTotal;
+  late double grandTotal;
   late String createBy;
   late DateTime createAt;
   late String updateBy;
