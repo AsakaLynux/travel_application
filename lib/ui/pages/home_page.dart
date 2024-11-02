@@ -67,42 +67,26 @@ class _HomePageState extends State<HomePage> {
             } else {
               return Container(
                 margin: EdgeInsets.zero,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          child: Text(
-                            "Hallo,\n${snapshot.data?.name}",
-                            style: blackTextStyle.copyWith(
-                              fontSize: 24,
-                              fontWeight: semiBold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                    SizedBox(
+                      width: 250,
+                      child: Text(
+                        "Hallo,\n${snapshot.data?.name}",
+                        style: blackTextStyle.copyWith(
+                          fontSize: 24,
+                          fontWeight: semiBold,
                         ),
-                        const SizedBox(height: 6),
-                        Text(
-                          "Where to fly today?",
-                          style: greyTextStyle.copyWith(
-                            fontSize: 16,
-                            fontWeight: light,
-                          ),
-                        ),
-                      ],
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    Container(
-                      width: 60,
-                      height: 60,
-                      padding: const EdgeInsets.all(5),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage("assets/image_profile.png"),
-                        ),
+                    const SizedBox(height: 6),
+                    Text(
+                      "Where to fly today?",
+                      style: greyTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: light,
                       ),
                     ),
                   ],
