@@ -79,7 +79,7 @@ void deleteData() {
 /*
   note:
   1. If account already get in to bonus page, the account don't need to pass it again
-  2. Check all file in lib folder to correcting import file
+  2. Check all file in lib folder to correcting import file ✔️
   3. Search a method to check if isar writetxt is success or failed
   4. Create transaction detail page
   5. Create admin page:
