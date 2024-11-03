@@ -81,11 +81,12 @@ void deleteData() {
   1. If account already get in to bonus page, the account don't need to pass it again
   2. Check all file in lib folder to correcting import file
   3. Search a method to check if isar writetxt is success or failed
-  4. Make transaction detail page
-  5. Make admin page:
+  4. Create transaction detail page
+  5. Create admin page:
     a. Can add destination
     b. Can delete account
     c. Can delete transaction
-  6. Make cancel transaction
+  6. Create cancel transaction
   7. Add status in transaction intance with value "Successed" || "Failed" || "Canceled"
+  8. Create test case for this application
 */
