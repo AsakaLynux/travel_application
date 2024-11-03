@@ -86,7 +86,10 @@ void deleteData() {
     a. Can add destination
     b. Can delete account
     c. Can delete transaction
-  6. Create cancel transaction
+  6. Create cancel transaction ✔️
   7. Add status in transaction intance with value "Successed" || "Failed" || "Canceled" ✔️
   8. Create test case for this application
+  9. Create wallet system
+  10. Add payment method in transaction intance
+  11. Change getDestination to getListDestination
 */

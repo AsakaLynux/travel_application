@@ -61,7 +61,7 @@ class TransactionServices extends IsarServices {
     }
   }
 
-  Future<List<Transaction?>> getTransaction() async {
+  Future<List<Transaction?>> getListTransaction() async {
     final isar = await db;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
@@ -73,6 +73,13 @@ class TransactionServices extends IsarServices {
         .findAll();
     showTransaction();
     return findTransaction;
+  }
+
+  Future<Transaction?> getTransaction(Id transactionId) async {
+    final isar = await db;
+    final existTransaction =
+        await isar.transactions.filter().idEqualTo(transactionId).findFirst();
+    return existTransaction;
   }
 
   Future<void> showTransaction() async {
@@ -147,6 +154,31 @@ class TransactionServices extends IsarServices {
       },
     );
     showTransaction();
+    return true;
+  }
+
+  Future<bool> cancelTransaction(Id destinationId, Id transactionId) async {
+    UserServices userServices = UserServices();
+
+    final Isar isar = await db;
+    final dataTransaction = await getTransaction(transactionId);
+    final dataUser = await userServices.getUser();
+    final cancelTransaction = await isar.transactions
+        .filter()
+        .user((q) => q.idEqualTo(dataUser!.id))
+        .and()
+        .destination((q) => q.idEqualTo(destinationId))
+        .and()
+        .idEqualTo(transactionId)
+        .findFirst();
+
+    if (cancelTransaction != null) {
+      await isar.writeTxn(() async {
+        dataTransaction?.status = "Canceled";
+        dataTransaction?.updateBy = dataUser!.name;
+        dataTransaction?.updateAt = DateTime.now();
+      });
+    }
     return true;
   }
 }
