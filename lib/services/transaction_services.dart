@@ -40,6 +40,7 @@ class TransactionServices extends IsarServices {
       ..vat = 0.45
       ..price = 1000000
       ..grandTotal = 1450000
+      ..status = "Successed"
       ..createBy = "admin"
       ..createAt = DateTime.now()
       ..updateBy = "admin"
@@ -131,6 +132,7 @@ class TransactionServices extends IsarServices {
       ..vat = vat
       ..price = price
       ..grandTotal = grandTotal
+      ..status = "Successed"
       ..createBy = getUser!.name
       ..createAt = DateTime.now()
       ..updateBy = getUser.name

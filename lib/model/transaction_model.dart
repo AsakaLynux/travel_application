@@ -6,6 +6,7 @@ class TransactionModel {
   final double vat;
   final int price;
   final double grandTotal;
+  final String status;
   final String createBy;
   final DateTime createAt;
   final String updateBy;
@@ -19,6 +20,7 @@ class TransactionModel {
     this.vat = 0.0,
     this.price = 0,
     this.grandTotal = 0.0,
+    this.status = "",
     this.createBy = "",
     DateTime? createAt,
     this.updateBy = "",

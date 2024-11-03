@@ -87,6 +87,6 @@ void deleteData() {
     b. Can delete account
     c. Can delete transaction
   6. Create cancel transaction
-  7. Add status in transaction intance with value "Successed" || "Failed" || "Canceled"
+  7. Add status in transaction intance with value "Successed" || "Failed" || "Canceled" ✔️
   8. Create test case for this application
 */

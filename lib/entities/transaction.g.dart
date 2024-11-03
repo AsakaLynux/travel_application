@@ -57,18 +57,23 @@ const TransactionSchema = CollectionSchema(
       name: r'selectedSeat',
       type: IsarType.string,
     ),
-    r'updateAt': PropertySchema(
+    r'status': PropertySchema(
       id: 8,
+      name: r'status',
+      type: IsarType.string,
+    ),
+    r'updateAt': PropertySchema(
+      id: 9,
       name: r'updateAt',
       type: IsarType.dateTime,
     ),
     r'updateBy': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'updateBy',
       type: IsarType.string,
     ),
     r'vat': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'vat',
       type: IsarType.double,
     )
@@ -110,6 +115,7 @@ int _transactionEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.createBy.length * 3;
   bytesCount += 3 + object.selectedSeat.length * 3;
+  bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.updateBy.length * 3;
   return bytesCount;
 }
@@ -128,9 +134,10 @@ void _transactionSerialize(
   writer.writeLong(offsets[5], object.price);
   writer.writeBool(offsets[6], object.refundable);
   writer.writeString(offsets[7], object.selectedSeat);
-  writer.writeDateTime(offsets[8], object.updateAt);
-  writer.writeString(offsets[9], object.updateBy);
-  writer.writeDouble(offsets[10], object.vat);
+  writer.writeString(offsets[8], object.status);
+  writer.writeDateTime(offsets[9], object.updateAt);
+  writer.writeString(offsets[10], object.updateBy);
+  writer.writeDouble(offsets[11], object.vat);
 }
 
 Transaction _transactionDeserialize(
@@ -149,9 +156,10 @@ Transaction _transactionDeserialize(
   object.price = reader.readLong(offsets[5]);
   object.refundable = reader.readBool(offsets[6]);
   object.selectedSeat = reader.readString(offsets[7]);
-  object.updateAt = reader.readDateTime(offsets[8]);
-  object.updateBy = reader.readString(offsets[9]);
-  object.vat = reader.readDouble(offsets[10]);
+  object.status = reader.readString(offsets[8]);
+  object.updateAt = reader.readDateTime(offsets[9]);
+  object.updateBy = reader.readString(offsets[10]);
+  object.vat = reader.readDouble(offsets[11]);
   return object;
 }
 
@@ -179,10 +187,12 @@ P _transactionDeserializeProp<P>(
     case 7:
       return (reader.readString(offset)) as P;
     case 8:
-      return (reader.readDateTime(offset)) as P;
-    case 9:
       return (reader.readString(offset)) as P;
+    case 9:
+      return (reader.readDateTime(offset)) as P;
     case 10:
+      return (reader.readString(offset)) as P;
+    case 11:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -860,6 +870,140 @@ extension TransactionQueryFilter
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> statusEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      statusGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> statusLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> statusBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'status',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      statusStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> statusEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> statusContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> statusMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'status',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      statusIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      statusIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'status',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition> updateAtEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -1247,6 +1391,18 @@ extension TransactionQuerySortBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByUpdateAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updateAt', Sort.asc);
@@ -1397,6 +1553,18 @@ extension TransactionQuerySortThenBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByUpdateAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updateAt', Sort.asc);
@@ -1487,6 +1655,13 @@ extension TransactionQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByStatus(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByUpdateAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'updateAt');
@@ -1560,6 +1735,12 @@ extension TransactionQueryProperty
   QueryBuilder<Transaction, String, QQueryOperations> selectedSeatProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'selectedSeat');
+    });
+  }
+
+  QueryBuilder<Transaction, String, QQueryOperations> statusProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'status');
     });
   }
 

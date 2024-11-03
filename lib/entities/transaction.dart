@@ -15,6 +15,7 @@ class Transaction {
   late double vat;
   late int price;
   late double grandTotal;
+  late String status;
   late String createBy;
   late DateTime createAt;
   late String updateBy;
