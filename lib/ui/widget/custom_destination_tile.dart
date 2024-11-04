@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import "../../shared/theme.dart";
 
-class DestinationTile extends StatelessWidget {
+class CustomDestinationTile extends StatelessWidget {
   final String? imageUrl;
   final String? name;
   final String? location;
   final double? rating;
-  const DestinationTile({
+  const CustomDestinationTile({
     super.key,
     required this.imageUrl,
     required this.name,

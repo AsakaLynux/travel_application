@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import "../../shared/theme.dart";
 
-class DestinationCard extends StatelessWidget {
+class CustomDestinationCard extends StatelessWidget {
   final String? image;
   final String? title;
   final double? rating;
   final String? location;
-  const DestinationCard({
+  const CustomDestinationCard({
     super.key,
     required this.image,
     required this.title,

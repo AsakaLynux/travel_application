@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: DestinationCard(
+                      child: CustomDestinationCard(
                         image: snapshot.data![index].imageUrl,
                         title: snapshot.data![index].name,
                         location: snapshot.data![index].location,
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: DestinationTile(
+                      child: CustomDestinationTile(
                         imageUrl: snapshot.data![index].imageUrl,
                         name: snapshot.data![index].name,
                         location: snapshot.data![index].location,
