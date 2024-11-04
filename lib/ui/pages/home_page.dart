@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
     UserServices userServices = UserServices();
     TransactionServices transactionServices = TransactionServices();
     SharedServices sharedServices = SharedServices();
-    final destination = destinationServices.getDestinations();
+    final fetchDestination = destinationServices.getDestinations();
     final fetchUserInfo = userServices.getUser();
     userServices.showUser();
     final fetchTransaction = transactionServices.getListTransaction();
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
 
       Widget cardDestination() {
         return FutureBuilder(
-          future: destination,
+          future: fetchDestination,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
       Widget listDestination() {
         return Expanded(
           child: FutureBuilder(
-            future: destination,
+            future: fetchDestination,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
