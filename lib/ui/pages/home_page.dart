@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     final destination = destinationServices.getDestinations();
     final fetchUserInfo = userServices.getUser();
     userServices.showUser();
-    final fetchTransaction = transactionServices.getTransaction();
+    final fetchTransaction = transactionServices.getListTransaction();
 
     Widget homePage() {
       Widget header() {
