@@ -42,38 +42,43 @@ const TransactionSchema = CollectionSchema(
       name: r'insurance',
       type: IsarType.bool,
     ),
-    r'price': PropertySchema(
+    r'paymentNMethod': PropertySchema(
       id: 5,
+      name: r'paymentNMethod',
+      type: IsarType.string,
+    ),
+    r'price': PropertySchema(
+      id: 6,
       name: r'price',
       type: IsarType.long,
     ),
     r'refundable': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'refundable',
       type: IsarType.bool,
     ),
     r'selectedSeat': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'selectedSeat',
       type: IsarType.string,
     ),
     r'status': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'status',
       type: IsarType.string,
     ),
     r'updateAt': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'updateAt',
       type: IsarType.dateTime,
     ),
     r'updateBy': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'updateBy',
       type: IsarType.string,
     ),
     r'vat': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'vat',
       type: IsarType.double,
     )
@@ -114,6 +119,7 @@ int _transactionEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.createBy.length * 3;
+  bytesCount += 3 + object.paymentNMethod.length * 3;
   bytesCount += 3 + object.selectedSeat.length * 3;
   bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.updateBy.length * 3;
@@ -131,13 +137,14 @@ void _transactionSerialize(
   writer.writeString(offsets[2], object.createBy);
   writer.writeDouble(offsets[3], object.grandTotal);
   writer.writeBool(offsets[4], object.insurance);
-  writer.writeLong(offsets[5], object.price);
-  writer.writeBool(offsets[6], object.refundable);
-  writer.writeString(offsets[7], object.selectedSeat);
-  writer.writeString(offsets[8], object.status);
-  writer.writeDateTime(offsets[9], object.updateAt);
-  writer.writeString(offsets[10], object.updateBy);
-  writer.writeDouble(offsets[11], object.vat);
+  writer.writeString(offsets[5], object.paymentNMethod);
+  writer.writeLong(offsets[6], object.price);
+  writer.writeBool(offsets[7], object.refundable);
+  writer.writeString(offsets[8], object.selectedSeat);
+  writer.writeString(offsets[9], object.status);
+  writer.writeDateTime(offsets[10], object.updateAt);
+  writer.writeString(offsets[11], object.updateBy);
+  writer.writeDouble(offsets[12], object.vat);
 }
 
 Transaction _transactionDeserialize(
@@ -153,13 +160,14 @@ Transaction _transactionDeserialize(
   object.grandTotal = reader.readDouble(offsets[3]);
   object.id = id;
   object.insurance = reader.readBool(offsets[4]);
-  object.price = reader.readLong(offsets[5]);
-  object.refundable = reader.readBool(offsets[6]);
-  object.selectedSeat = reader.readString(offsets[7]);
-  object.status = reader.readString(offsets[8]);
-  object.updateAt = reader.readDateTime(offsets[9]);
-  object.updateBy = reader.readString(offsets[10]);
-  object.vat = reader.readDouble(offsets[11]);
+  object.paymentNMethod = reader.readString(offsets[5]);
+  object.price = reader.readLong(offsets[6]);
+  object.refundable = reader.readBool(offsets[7]);
+  object.selectedSeat = reader.readString(offsets[8]);
+  object.status = reader.readString(offsets[9]);
+  object.updateAt = reader.readDateTime(offsets[10]);
+  object.updateBy = reader.readString(offsets[11]);
+  object.vat = reader.readDouble(offsets[12]);
   return object;
 }
 
@@ -181,18 +189,20 @@ P _transactionDeserializeProp<P>(
     case 4:
       return (reader.readBool(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
-    case 6:
-      return (reader.readBool(offset)) as P;
-    case 7:
       return (reader.readString(offset)) as P;
+    case 6:
+      return (reader.readLong(offset)) as P;
+    case 7:
+      return (reader.readBool(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
-      return (reader.readDateTime(offset)) as P;
-    case 10:
       return (reader.readString(offset)) as P;
+    case 10:
+      return (reader.readDateTime(offset)) as P;
     case 11:
+      return (reader.readString(offset)) as P;
+    case 12:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -666,6 +676,142 @@ extension TransactionQueryFilter
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'insurance',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'paymentNMethod',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'paymentNMethod',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'paymentNMethod',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'paymentNMethod',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'paymentNMethod',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'paymentNMethod',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'paymentNMethod',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'paymentNMethod',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'paymentNMethod',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      paymentNMethodIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'paymentNMethod',
+        value: '',
       ));
     });
   }
@@ -1354,6 +1500,19 @@ extension TransactionQuerySortBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByPaymentNMethod() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'paymentNMethod', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      sortByPaymentNMethodDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'paymentNMethod', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.asc);
@@ -1516,6 +1675,19 @@ extension TransactionQuerySortThenBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByPaymentNMethod() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'paymentNMethod', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy>
+      thenByPaymentNMethodDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'paymentNMethod', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.asc);
@@ -1636,6 +1808,14 @@ extension TransactionQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByPaymentNMethod(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'paymentNMethod',
+          caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'price');
@@ -1717,6 +1897,12 @@ extension TransactionQueryProperty
   QueryBuilder<Transaction, bool, QQueryOperations> insuranceProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'insurance');
+    });
+  }
+
+  QueryBuilder<Transaction, String, QQueryOperations> paymentNMethodProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'paymentNMethod');
     });
   }
 
