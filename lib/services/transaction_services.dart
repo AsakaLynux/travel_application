@@ -157,7 +157,7 @@ class TransactionServices extends IsarServices {
     return true;
   }
 
-  Future<bool> cancelTransaction(Id destinationId, Id transactionId) async {
+  Future<bool> cancelTransaction(Id transactionId) async {
     UserServices userServices = UserServices();
 
     final Isar isar = await db;
@@ -166,8 +166,6 @@ class TransactionServices extends IsarServices {
     final cancelTransaction = await isar.transactions
         .filter()
         .user((q) => q.idEqualTo(dataUser!.id))
-        .and()
-        .destination((q) => q.idEqualTo(destinationId))
         .and()
         .idEqualTo(transactionId)
         .findFirst();
