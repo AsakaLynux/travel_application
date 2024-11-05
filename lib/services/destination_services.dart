@@ -30,13 +30,13 @@ class DestinationServices extends IsarServices {
     }
   }
 
-  Future<List<Destination>> getDestinations() async {
+  Future<List<Destination>> getListDestination() async {
     final isar = await db;
     final existDestination = await isar.destinations.where().findAll();
     return existDestination;
   }
 
-  Future<Destination?> getDestinationDetail(Id id) async {
+  Future<Destination?> getDestination(Id id) async {
     final isar = await db;
     final destination = await isar.destinations.get(id);
     return destination;

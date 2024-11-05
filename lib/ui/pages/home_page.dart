@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
     UserServices userServices = UserServices();
     TransactionServices transactionServices = TransactionServices();
     SharedServices sharedServices = SharedServices();
-    final fetchDestination = destinationServices.getDestinations();
+    final fetchDestination = destinationServices.getListDestination();
     final fetchUserInfo = userServices.getUser();
     userServices.showUser();
     final fetchTransaction = transactionServices.getListTransaction();

@@ -33,7 +33,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   @override
   Widget build(BuildContext context) {
     final destinationId = ModalRoute.of(context)!.settings.arguments as int;
-    final destination = destinationServices.getDestinationDetail(destinationId);
+    final destination = destinationServices.getDestination(destinationId);
 
     Widget checkoutCard() {
       Widget bookingDetails() {

@@ -200,7 +200,7 @@ class TransactionDetailPage extends StatelessWidget {
 
     Widget destinationtile(AsyncSnapshot<Transaction?> snapshot) {
       final fetchDestination = destinationServices
-          .getDestinationDetail(snapshot.data!.destination.value!.id);
+          .getDestination(snapshot.data!.destination.value!.id);
       return FutureBuilder(
         future: fetchDestination,
         builder: (context, destination) {

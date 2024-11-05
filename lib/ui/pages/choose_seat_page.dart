@@ -16,7 +16,7 @@ class ChooseSeatPage extends StatelessWidget {
     DestinationServices destinationServices = DestinationServices();
 
     final destinationId = ModalRoute.of(context)!.settings.arguments as int;
-    final destination = destinationServices.getDestinationDetail(destinationId);
+    final destination = destinationServices.getDestination(destinationId);
     int randomSeatId() {
       List<int> seatIdList = [0, 1, 2];
       final random = Random();

@@ -11,7 +11,7 @@ Developing
     8. Create test case for this application
     9. Create wallet system (can add wallet, decrease wallet when transaction)
     10. Add payment method in transaction intance (Update all method that related with transaction intance update) ✔️
-    11. Change getDestination to getListDestination
+    11. Change getDestination to getListDestination (Change all file that have impact whit this change) ✔️
 
 Testing
 

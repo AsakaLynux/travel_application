@@ -14,7 +14,7 @@ class DestinationDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final destinationId = ModalRoute.of(context)!.settings.arguments as int;
     DestinationServices destinationServices = DestinationServices();
-    final destination = destinationServices.getDestinationDetail(destinationId);
+    final destination = destinationServices.getDestination(destinationId);
     Widget destinationBackground(AsyncSnapshot<Destination?> snapshot) {
       Widget destinationTitle(AsyncSnapshot<Destination?> snapshot) {
         return Container(

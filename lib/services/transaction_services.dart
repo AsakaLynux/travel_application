@@ -132,7 +132,7 @@ class TransactionServices extends IsarServices {
     final isar = await db;
     final getUser = await userServices.getUser();
     final getDestination =
-        await destinationServices.getDestinationDetail(destinationId);
+        await destinationServices.getDestination(destinationId);
     final transaction = Transaction()
       ..amountOfTraveler = amountOfTraveler
       ..selectedSeat = selectedSeat
