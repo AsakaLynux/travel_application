@@ -296,7 +296,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     vat,
                     price,
                     grandTotal,
-                    destinationId);
+                    destinationId,
+                    selectedPayment.toString());
 
                 if (transaction) {
                   if (context.mounted) {

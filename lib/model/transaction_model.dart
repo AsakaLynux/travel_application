@@ -7,6 +7,7 @@ class TransactionModel {
   final int price;
   final double grandTotal;
   final String status;
+  final String paymentMehtod;
   final String createBy;
   final DateTime createAt;
   final String updateBy;
@@ -21,6 +22,7 @@ class TransactionModel {
     this.price = 0,
     this.grandTotal = 0.0,
     this.status = "",
+    this.paymentMehtod = "",
     this.createBy = "",
     DateTime? createAt,
     this.updateBy = "",

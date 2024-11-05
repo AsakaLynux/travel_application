@@ -41,6 +41,7 @@ class TransactionServices extends IsarServices {
       ..price = 1000000
       ..grandTotal = 1450000
       ..status = "Successed"
+      ..paymentNMethod = "Virtual account"
       ..createBy = "admin"
       ..createAt = DateTime.now()
       ..updateBy = "admin"
@@ -124,6 +125,7 @@ class TransactionServices extends IsarServices {
     int price,
     double grandTotal,
     Id destinationId,
+    String paymentMethod,
   ) async {
     UserServices userServices = UserServices();
     DestinationServices destinationServices = DestinationServices();
@@ -140,6 +142,7 @@ class TransactionServices extends IsarServices {
       ..price = price
       ..grandTotal = grandTotal
       ..status = "Successed"
+      ..paymentNMethod = paymentMethod
       ..createBy = getUser!.name
       ..createAt = DateTime.now()
       ..updateBy = getUser.name

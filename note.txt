@@ -10,7 +10,7 @@ Developing
     7. Add status in transaction intance with value "Successed" || "Failed" || "Canceled" ✔️
     8. Create test case for this application
     9. Create wallet system (can add wallet, decrease wallet when transaction)
-    10. Add payment method in transaction intance
+    10. Add payment method in transaction intance (Update all method that related with transaction intance update) ✔️
     11. Change getDestination to getListDestination
 
 Testing
