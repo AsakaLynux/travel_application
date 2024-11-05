@@ -1,20 +1,20 @@
 Developing
     1. If account already get in to bonus page, the account don't need to pass it again  
     3. Search a method to check if isar writetxt is success or failed
-    4. Create transaction detail page ✔️
     5. Create admin page:
         a. Can add destination
         b. Can delete account
         c. Can delete transaction
-    6. Create cancel transaction ✔️
-    7. Add status in transaction intance with value "Successed" || "Failed" || "Canceled" ✔️
     8. Create test case for this application
     9. Create wallet system (can add wallet, decrease wallet when transaction)
-    10. Add payment method in transaction intance (Update all method that related with transaction intance update) ✔️
-    11. Change getDestination to getListDestination (Change all file that have impact whit this change) ✔️
+    
+    
 
 Testing
-
+    4. Create transaction detail page ✔️
+    6. Create cancel transaction ✔️
+    7. Add status in transaction intance with value "Successed" || "Failed" || "Canceled" ✔️
+    10. Add payment method in transaction intance (Update all method that related with transaction intance update) ✔️
 
 
 
@@ -25,3 +25,4 @@ Bug Fixing
 
 Done
     2. Check all file in lib folder to correcting import file
+    11. Change getDestination to getListDestination (Change all file that have impact whit this change) ✔️
