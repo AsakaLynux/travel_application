@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import "../../shared/theme.dart";
 
 class CustomDestinationTile extends StatelessWidget {
-  final String? imageUrl;
-  final String? name;
-  final String? location;
-  final double? rating;
+  final String imageUrl;
+  final String name;
+  final String location;
+  final double rating;
   const CustomDestinationTile({
     super.key,
     required this.imageUrl,
@@ -36,18 +36,19 @@ class CustomDestinationTile extends StatelessWidget {
                   width: 70,
                   height: 70,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(imageUrl!),
-                      )),
+                    borderRadius: BorderRadius.circular(18),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(imageUrl),
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name!,
+                      name,
                       style: blackTextStyle.copyWith(
                         fontSize: 18,
                         fontWeight: medium,
@@ -55,7 +56,7 @@ class CustomDestinationTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      location!,
+                      location,
                       style: greyTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: light,
