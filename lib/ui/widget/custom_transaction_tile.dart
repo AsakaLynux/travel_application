@@ -6,14 +6,14 @@ class CustomTransactionTile extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String location;
-  final String seat;
+  final int person;
   final double grandTotal;
   const CustomTransactionTile({
     super.key,
     required this.imageUrl,
     required this.name,
     required this.location,
-    required this.seat,
+    required this.person,
     required this.grandTotal,
   });
 
@@ -63,7 +63,7 @@ class CustomTransactionTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Seat: $seat",
+                      "Traveler: $person",
                       style: greyTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: light,
