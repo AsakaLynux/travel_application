@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'transaction_detail_page.dart';
 import '../widget/custom_transaction_tile.dart';
 import '../../services/transaction_services.dart';
 import '../../services/user_services.dart';
@@ -326,14 +327,27 @@ class _HomePageState extends State<HomePage> {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) => CustomTransactionTile(
-                    imageUrl:
-                        snapshot.data![index]!.destination.value!.imageUrl,
-                    name: snapshot.data![index]!.destination.value!.name,
-                    location:
-                        snapshot.data![index]!.destination.value!.location,
-                    seat: snapshot.data![index]!.selectedSeat,
-                    grandTotal: snapshot.data![index]!.grandTotal,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TransactionDetailPage(),
+                          settings: RouteSettings(
+                            arguments: snapshot.data![index]?.id,
+                          ),
+                        ),
+                      );
+                    },
+                    child: CustomTransactionTile(
+                      imageUrl:
+                          snapshot.data![index]!.destination.value!.imageUrl,
+                      name: snapshot.data![index]!.destination.value!.name,
+                      location:
+                          snapshot.data![index]!.destination.value!.location,
+                      person: snapshot.data![index]!.amountOfTraveler,
+                      grandTotal: snapshot.data![index]!.grandTotal,
+                    ),
                   ),
                 );
               }
