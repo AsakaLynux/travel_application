@@ -61,68 +61,79 @@ class TransactionDetailPage extends StatelessWidget {
         );
       }
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Booking Details",
-            style: blackTextStyle.copyWith(
-              fontSize: 16,
-              fontWeight: semiBold,
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+        decoration: BoxDecoration(
+          color: kWhiteColor,
+          borderRadius: BorderRadius.circular(defaultRadius),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Booking Details",
+              style: blackTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: semiBold,
+              ),
             ),
-          ),
-          transactionDetails(
-            "Traveler",
-            "${snapshot.data!.amountOfTraveler} Orang",
-            blackTextStyle,
-          ),
-          transactionDetails(
-            "Seat",
-            snapshot.data!.selectedSeat,
-            blackTextStyle,
-          ),
-          transactionDetails(
-            "Insurance",
-            snapshot.data!.insurance ? "Yes" : "No",
-            snapshot.data!.insurance ? greenTextStyle : redTextStyle,
-          ),
-          transactionDetails(
-            "Refundable",
-            snapshot.data!.refundable ? "Yes" : "No",
-            snapshot.data!.refundable ? greenTextStyle : redTextStyle,
-          ),
-          transactionDetails(
-            "VAT",
-            "${snapshot.data!.vat * 100}%",
-            blackTextStyle,
-          ),
-          transactionDetails(
-            "Grand Total",
-            formatRupiah.format(snapshot.data!.grandTotal),
-            purpleTextStyle,
-          ),
-          transactionDetails(
-            "Status",
-            snapshot.data!.status,
-            blackTextStyle,
-          ),
-        ],
+            transactionDetails(
+              "Traveler",
+              "${snapshot.data!.amountOfTraveler} Person",
+              blackTextStyle,
+            ),
+            transactionDetails(
+              "Seat",
+              snapshot.data!.selectedSeat,
+              blackTextStyle,
+            ),
+            transactionDetails(
+              "Insurance",
+              snapshot.data!.insurance ? "Yes" : "No",
+              snapshot.data!.insurance ? greenTextStyle : redTextStyle,
+            ),
+            transactionDetails(
+              "Refundable",
+              snapshot.data!.refundable ? "Yes" : "No",
+              snapshot.data!.refundable ? greenTextStyle : redTextStyle,
+            ),
+            transactionDetails(
+              "VAT",
+              "${snapshot.data!.vat * 100}%",
+              blackTextStyle,
+            ),
+            transactionDetails(
+              "Grand Total",
+              formatRupiah.format(snapshot.data!.grandTotal),
+              purpleTextStyle,
+            ),
+            transactionDetails(
+              "Status",
+              snapshot.data!.status,
+              blackTextStyle,
+            ),
+          ],
+        ),
       );
     }
 
-    Widget paymentDetails() {
+    Widget paymentDetails(AsyncSnapshot<Transaction?> snapshot) {
       Widget paymentMethod() {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 23, horizontal: 20),
+          width: double.infinity,
           decoration: BoxDecoration(
             color: kPrimaryColor,
             borderRadius: BorderRadius.circular(defaultRadius),
           ),
-          child: Text(
-            "Virtual Account",
-            style: whiteTextStyle.copyWith(
-              fontSize: 16,
-              fontWeight: medium,
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              snapshot.data!.paymentNMethod,
+              style: whiteTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: medium,
+              ),
             ),
           ),
         );
@@ -167,33 +178,53 @@ class TransactionDetailPage extends StatelessWidget {
 
     Widget cancelTransactionButton(AsyncSnapshot<Transaction?> snapshot) {
       return CustomButton(
-        text: "Pay Now",
+        text: "Cancel",
         width: 327,
-        onPressed: () async {
-          final transaction =
-              await transactionServices.cancelTransaction(snapshot.data!.id);
-          if (transaction) {
-            if (context.mounted) {
-              Navigator.pushNamed(context, "/SuccessCheckOutPage");
-            }
-            return Fluttertoast.showToast(
-              msg: "Transaction Success",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: kWhiteColor,
-              textColor: kBlackColor,
-              fontSize: 16.0,
-            );
-          } else {
-            return Fluttertoast.showToast(
-              msg: "Transaction Failed",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: kWhiteColor,
-              textColor: kBlackColor,
-              fontSize: 16.0,
-            );
-          }
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("Are you sure?"),
+              actions: [
+                CustomButton(
+                  text: "Yes",
+                  width: 70,
+                  onPressed: () async {
+                    final transaction = await transactionServices
+                        .cancelTransaction(snapshot.data!.id);
+                    if (transaction) {
+                      if (context.mounted) {
+                        Navigator.pushNamed(context, "/HomePage");
+                      }
+                      return Fluttertoast.showToast(
+                        msg: "Transaction Success",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: kWhiteColor,
+                        textColor: kBlackColor,
+                        fontSize: 16.0,
+                      );
+                    } else {
+                      return Fluttertoast.showToast(
+                        msg: "Transaction Failed",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: kWhiteColor,
+                        textColor: kBlackColor,
+                        fontSize: 16.0,
+                      );
+                    }
+                  },
+                ),
+                CustomButton(
+                  text: "No",
+                  width: 70,
+                  backGroundColor: kRedColor,
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          );
         },
       );
     }
@@ -204,18 +235,19 @@ class TransactionDetailPage extends StatelessWidget {
       return FutureBuilder(
         future: fetchDestination,
         builder: (context, destination) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          } else if (!snapshot.hasData || snapshot.data == null) {
+          if (destination.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (destination.hasError) {
+            return Text("${destination.error}");
+          } else if (!destination.hasData || destination.data == null) {
             return const Text("No Data");
           } else {
             return CustomDestinationTile(
-                imageUrl: destination.data!.imageUrl,
-                name: destination.data!.name,
-                location: destination.data!.location,
-                rating: destination.data!.rating);
+              imageUrl: destination.data!.imageUrl,
+              name: destination.data!.name,
+              location: destination.data!.location,
+              rating: destination.data!.rating,
+            );
           }
         },
       );
@@ -236,10 +268,11 @@ class TransactionDetailPage extends StatelessWidget {
               return const Text("No Data");
             } else {
               return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   destinationtile(transaction),
                   bookingDetails(transaction),
-                  paymentDetails(),
+                  paymentDetails(transaction),
                   cancelTransactionButton(transaction),
                   termAndConditions(),
                 ],
