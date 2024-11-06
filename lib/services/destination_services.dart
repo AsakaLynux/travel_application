@@ -39,17 +39,28 @@ class DestinationServices extends IsarServices {
   Future<Destination?> getDestination(Id id) async {
     final isar = await db;
     final destination = await isar.destinations.get(id);
+    showDestination(destination!.id);
     return destination;
   }
 
-  void showDestination() async {
+  void showListDestination() async {
     final isar = await db;
     final existDestinations = await isar.destinations.where().findAll();
     for (var get in existDestinations) {
       if (kDebugMode) {
         print(
-            "${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
+            "Show all destinations ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
       }
+    }
+  }
+
+  void showDestination(Id destinationId) async {
+    final isar = await db;
+    final existDestinations =
+        await isar.destinations.where().idEqualTo(destinationId).findFirst();
+    if (kDebugMode) {
+      print(
+          "Show destination ${existDestinations!.id}, ${existDestinations.name}, ${existDestinations.createBy}, ${existDestinations.createAt}, ${existDestinations.updateBy}, ${existDestinations.updateAt}");
     }
   }
 }
