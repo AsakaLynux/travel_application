@@ -80,6 +80,7 @@ class TransactionServices extends IsarServices {
     final isar = await db;
     final existTransaction =
         await isar.transactions.filter().idEqualTo(transactionId).findFirst();
+    showTransactionById(transactionId);
     return existTransaction;
   }
 
@@ -90,7 +91,7 @@ class TransactionServices extends IsarServices {
 
     if (kDebugMode) {
       print(
-          "All Transaction: user id = ${transaction!.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}");
+          "showTransactionById: user id = ${transaction!.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}, transaction statu = ${transaction.status}");
     }
   }
 
@@ -111,7 +112,7 @@ class TransactionServices extends IsarServices {
       } else {
         for (var transaction in existTransaction) {
           print(
-              "Exist Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}");
+              "showExistTransaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}, transaction statu = ${transaction.status}");
         }
       }
     }
