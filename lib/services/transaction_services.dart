@@ -170,6 +170,8 @@ class TransactionServices extends IsarServices {
         .user((q) => q.idEqualTo(dataUser!.id))
         .and()
         .idEqualTo(transactionId)
+        .and()
+        .statusEqualTo("Successed")
         .findFirst();
     showTransactionById(transactionId);
     if (cancelTransaction != null) {
