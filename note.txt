@@ -9,7 +9,7 @@ Developing
     - Create wallet system (can add wallet, decrease wallet when transaction)
     - Make filter and sort to transaction and destination
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
-    
+    - Check and correcting syntax in service and model folder 
 
 Testing
     
