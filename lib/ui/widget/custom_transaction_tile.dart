@@ -8,6 +8,7 @@ class CustomTransactionTile extends StatelessWidget {
   final String location;
   final int person;
   final double grandTotal;
+  final String status;
   const CustomTransactionTile({
     super.key,
     required this.imageUrl,
@@ -15,6 +16,7 @@ class CustomTransactionTile extends StatelessWidget {
     required this.location,
     required this.person,
     required this.grandTotal,
+    required this.status,
   });
 
   @override
@@ -23,7 +25,7 @@ class CustomTransactionTile extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(bottom: 10),
       width: 327,
-      height: 110,
+      // height: 110,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: kWhiteColor,
@@ -35,14 +37,15 @@ class CustomTransactionTile extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 80,
-                  height: 80,
+                  width: 100,
+                  height: 100,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(imageUrl),
-                      )),
+                    borderRadius: BorderRadius.circular(18),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(imageUrl),
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Column(
@@ -63,7 +66,7 @@ class CustomTransactionTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Traveler: $person",
+                      "Traveler: $person Person",
                       style: greyTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: light,
@@ -74,6 +77,13 @@ class CustomTransactionTile extends StatelessWidget {
                       "GrandTotal: ${formatRupiah.format(
                         grandTotal,
                       )}",
+                      style: greyTextStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: light,
+                      ),
+                    ),
+                    Text(
+                      "Status: $status",
                       style: greyTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: light,

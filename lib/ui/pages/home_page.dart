@@ -347,6 +347,7 @@ class _HomePageState extends State<HomePage> {
                           snapshot.data![index]!.destination.value!.location,
                       person: snapshot.data![index]!.amountOfTraveler,
                       grandTotal: snapshot.data![index]!.grandTotal,
+                      status: snapshot.data![index]!.status,
                     ),
                   ),
                 );
