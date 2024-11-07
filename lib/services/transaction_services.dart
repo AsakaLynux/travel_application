@@ -189,7 +189,7 @@ class TransactionServices extends IsarServices {
     UserServices userServices = UserServices();
     final Isar isar = await db;
     final userData = await userServices.getUser();
-    final existTransaction = await isar.transactions
+    final existTransaction = isar.transactions
         .filter()
         .user(
           (q) => q.idEqualTo(userData!.id),
@@ -197,11 +197,13 @@ class TransactionServices extends IsarServices {
         .and()
         .idEqualTo(transactionId)
         .and()
-        .statusEqualTo("Canceled")
-        .deleteAll();
-    await isar.writeTxn(() async {
-      existTransaction;
-    });
+        .statusEqualTo("Canceled");
+
+    if (await existTransaction.isNotEmpty()) {
+      await isar.writeTxn(() async {
+        existTransaction;
+      });
+    }
     return true;
   }
 }
