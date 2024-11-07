@@ -176,9 +176,9 @@ class TransactionServices extends IsarServices {
     showTransactionById(transactionId);
     if (cancelTransaction != null) {
       await isar.writeTxn(() async {
-        cancelTransaction?.status = "Canceled";
-        cancelTransaction?.updateBy = dataUser!.name;
-        cancelTransaction?.updateAt = DateTime.now();
+        cancelTransaction.status = "Canceled";
+        cancelTransaction.updateBy = dataUser!.name;
+        cancelTransaction.updateAt = DateTime.now();
         await isar.transactions.put(cancelTransaction);
       });
     }
