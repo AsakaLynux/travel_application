@@ -201,7 +201,7 @@ class TransactionServices extends IsarServices {
 
     if (await existTransaction.isNotEmpty()) {
       await isar.writeTxn(() async {
-        existTransaction;
+        existTransaction.deleteAll();
       });
     }
     return true;
