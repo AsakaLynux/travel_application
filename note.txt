@@ -7,13 +7,13 @@ Developing
         - Can delete transaction
     - Create test case for this application
     - Create wallet system (can add wallet, decrease wallet when transaction)
-    - Create delete transaction
     - If transaction status == canceled, then cancel button turn into delete button and run delete transaction function
-    
+    - Make filter to transaction and destination
+    - Display transaction status on transaction
     
 
 Testing
-    
+    - Create delete transaction
     
     
 
@@ -25,6 +25,7 @@ Bug Fixing
 
 
 Done
+    
     - Create cancel transaction
     - Add status in transaction intance with value "Successed" || "Failed" || "Canceled"
     - Create transaction detail page

@@ -163,9 +163,7 @@ class TransactionServices extends IsarServices {
 
   Future<bool> cancelTransaction(Id transactionId) async {
     UserServices userServices = UserServices();
-
     final Isar isar = await db;
-
     final dataUser = await userServices.getUser();
     final cancelTransaction = await isar.transactions
         .filter()
@@ -182,6 +180,26 @@ class TransactionServices extends IsarServices {
         await isar.transactions.put(cancelTransaction);
       });
     }
+    return true;
+  }
+
+  Future<bool> deleteTransaction(Id transactionId) async {
+    UserServices userServices = UserServices();
+    final Isar isar = await db;
+    final userData = await userServices.getUser();
+    final existTransaction = await isar.transactions
+        .filter()
+        .user(
+          (q) => q.idEqualTo(userData!.id),
+        )
+        .and()
+        .idEqualTo(transactionId)
+        .and()
+        .statusEqualTo("Canceled")
+        .deleteAll();
+    await isar.writeTxn(() async {
+      existTransaction;
+    });
     return true;
   }
 }
