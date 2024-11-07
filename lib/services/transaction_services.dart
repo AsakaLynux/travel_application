@@ -72,7 +72,7 @@ class TransactionServices extends IsarServices {
           (q) => q.idEqualTo(userId!),
         )
         .findAll();
-    showTransaction();
+    showExistTransaction();
     return findTransaction;
   }
 
@@ -83,28 +83,29 @@ class TransactionServices extends IsarServices {
     return existTransaction;
   }
 
-  Future<void> showTransaction() async {
+  void showTransactionById(Id transactionId) async {
+    final isar = await db;
+    final transaction =
+        await isar.transactions.filter().idEqualTo(transactionId).findFirst();
+
+    if (kDebugMode) {
+      print(
+          "All Transaction: user id = ${transaction!.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}");
+    }
+  }
+
+  void showExistTransaction() async {
     final isar = await db;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
-    final allTransaction = await isar.transactions.where().findAll();
+
     final existTransaction = await isar.transactions
         .filter()
         .user(
           (q) => q.idEqualTo(userId!),
         )
         .findAll();
-
     if (kDebugMode) {
-      if (allTransaction.isEmpty) {
-        print("There is no transaction for all account");
-      } else {
-        for (var transaction in allTransaction) {
-          print(
-              "All Transaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}");
-        }
-      }
-
       if (existTransaction.isEmpty) {
         print("There is no transaction data for this account");
       } else {
@@ -156,7 +157,7 @@ class TransactionServices extends IsarServices {
         await transaction.destination.save();
       },
     );
-    showTransaction();
+    showExistTransaction();
     return true;
   }
 
@@ -164,7 +165,7 @@ class TransactionServices extends IsarServices {
     UserServices userServices = UserServices();
 
     final Isar isar = await db;
-    final dataTransaction = await getTransaction(transactionId);
+
     final dataUser = await userServices.getUser();
     final cancelTransaction = await isar.transactions
         .filter()
@@ -172,12 +173,13 @@ class TransactionServices extends IsarServices {
         .and()
         .idEqualTo(transactionId)
         .findFirst();
-
+    showTransactionById(transactionId);
     if (cancelTransaction != null) {
       await isar.writeTxn(() async {
-        dataTransaction?.status = "Canceled";
-        dataTransaction?.updateBy = dataUser!.name;
-        dataTransaction?.updateAt = DateTime.now();
+        cancelTransaction?.status = "Canceled";
+        cancelTransaction?.updateBy = dataUser!.name;
+        cancelTransaction?.updateAt = DateTime.now();
+        await isar.transactions.put(cancelTransaction);
       });
     }
     return true;
