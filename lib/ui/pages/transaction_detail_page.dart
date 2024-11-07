@@ -176,57 +176,69 @@ class TransactionDetailPage extends StatelessWidget {
       );
     }
 
-    Widget cancelTransactionButton(AsyncSnapshot<Transaction?> snapshot) {
-      return CustomButton(
-        text: "Cancel",
-        width: 327,
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text("Are you sure?"),
-              actions: [
-                CustomButton(
-                  text: "Yes",
-                  width: 70,
-                  onPressed: () async {
-                    final transaction = await transactionServices
-                        .cancelTransaction(snapshot.data!.id);
-                    if (transaction) {
-                      if (context.mounted) {
-                        Navigator.pushNamed(context, "/HomePage");
+    Widget transactionButton(AsyncSnapshot<Transaction?> snapshot) {
+      Widget button(bool deleteTransaction) {
+        String text;
+        return CustomButton(
+          text: deleteTransaction ? text = "Delete" : text = "Cancel",
+          width: 327,
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text("Are you sure $text transaction?"),
+                actions: [
+                  CustomButton(
+                    text: "Yes",
+                    width: 70,
+                    onPressed: () async {
+                      bool transaction = await transactionServices
+                          .cancelTransaction(snapshot.data!.id);
+                      if (deleteTransaction) {
+                        transaction = await transactionServices
+                            .deleteTransaction(snapshot.data!.id);
                       }
-                      return Fluttertoast.showToast(
-                        msg: "Transaction Success",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: kWhiteColor,
-                        textColor: kBlackColor,
-                        fontSize: 16.0,
-                      );
-                    } else {
-                      return Fluttertoast.showToast(
-                        msg: "Transaction Failed",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: kWhiteColor,
-                        textColor: kBlackColor,
-                        fontSize: 16.0,
-                      );
-                    }
-                  },
-                ),
-                CustomButton(
-                  text: "No",
-                  width: 70,
-                  backGroundColor: kRedColor,
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-          );
-        },
-      );
+                      if (transaction) {
+                        if (context.mounted) {
+                          Navigator.pushNamed(context, "/HomePage");
+                        }
+                        return Fluttertoast.showToast(
+                          msg: "Transaction $text Success",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: kWhiteColor,
+                          textColor: kBlackColor,
+                          fontSize: 16.0,
+                        );
+                      } else {
+                        return Fluttertoast.showToast(
+                          msg: "Transaction $text Failed",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: kWhiteColor,
+                          textColor: kBlackColor,
+                          fontSize: 16.0,
+                        );
+                      }
+                    },
+                  ),
+                  CustomButton(
+                    text: "No",
+                    width: 70,
+                    backGroundColor: kRedColor,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      }
+
+      if (snapshot.data!.status == "Canceled") {
+        return button(true);
+      }
+      return button(false);
     }
 
     Widget destinationtile(AsyncSnapshot<Transaction?> snapshot) {
@@ -273,7 +285,7 @@ class TransactionDetailPage extends StatelessWidget {
                   destinationtile(transaction),
                   bookingDetails(transaction),
                   paymentDetails(transaction),
-                  cancelTransactionButton(transaction),
+                  transactionButton(transaction),
                   termAndConditions(),
                 ],
               );

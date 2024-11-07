@@ -3,12 +3,12 @@ Developing
     - Search a method to check if isar writetxt is success or failed
     - Create admin page:
         - Can add destination
-        -  Can delete account
+        - Can delete account
         - Can delete transaction
     - Create test case for this application
     - Create wallet system (can add wallet, decrease wallet when transaction)
-    - If transaction status == canceled, then cancel button turn into delete button and run delete transaction function
-    - Make filter to transaction and destination
+    - Make filter and sort to transaction and destination
+    - Search a method for every clickable widget get a click, the Future builder dont get refresh
     
 
 Testing
@@ -24,6 +24,7 @@ Bug Fixing
 
 
 Done
+    - If transaction status == canceled, then cancel button turn into delete button and run delete transaction function
     - Display transaction status on transaction
     - Create cancel transaction
     - Add status in transaction intance with value "Successed" || "Failed" || "Canceled"
