@@ -12,7 +12,6 @@ Developing
     
 
 Testing
-    - Create delete transaction
     
     
 
@@ -24,6 +23,7 @@ Bug Fixing
 
 
 Done
+    - Create delete transaction
     - If transaction status == canceled, then cancel button turn into delete button and run delete transaction function
     - Display transaction status on transaction
     - Create cancel transaction
