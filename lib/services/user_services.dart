@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../entities/transaction.dart';
 import '../entities/user.dart';
 import '../services/shared_services.dart';
-import '../model/user_model.dart';
 import 'isar_services.dart';
 
 class UserServices extends IsarServices {
@@ -147,27 +148,55 @@ class UserServices extends IsarServices {
   }
 }
 
-List<UserModel> userList = [
-  UserModel(
-    name: "admin",
-    email: "admin@admin.com",
-    password: "admin",
-    hobby: "Jadi admin",
-    wallet: 0,
-    createBy: "admin",
-    createAt: DateTime.now(),
-    updateBy: "admin",
-    updateAt: DateTime.now(),
-  ),
-  UserModel(
-    name: "irfan",
-    email: "irfan@gmail.com",
-    password: "shinigami",
-    hobby: "Game",
-    wallet: 1000000,
-    createBy: "admin",
-    createAt: DateTime.now(),
-    updateBy: "admin",
-    updateAt: DateTime.now(),
-  ),
+// Random Price
+const int maxPrince = 9000001;
+const int minPrice = 1000000;
+int randomPrice = Random().nextInt(maxPrince) + minPrice;
+
+List<User> userList = [
+  User()
+    ..name = "admin"
+    ..email = "admin@admin.com"
+    ..password = "admin"
+    ..hobby = "Jadi admin"
+    ..wallet = randomPrice
+    ..createAt = DateTime.now()
+    ..createBy = "admin"
+    ..updateAt = DateTime.now()
+    ..updateBy = "admin",
+  User()
+    ..name = "irfan"
+    ..email = "irfan@admin.com"
+    ..password = "s"
+    ..hobby = "Jadi admin"
+    ..wallet = randomPrice
+    ..createAt = DateTime.now()
+    ..createBy = "admin"
+    ..updateAt = DateTime.now()
+    ..updateBy = "admin",
 ];
+
+// List<UserModel> userList = [
+//   UserModel(
+//     name: "admin",
+//     email: "admin@admin.com",
+//     password: "admin",
+//     hobby: "Jadi admin",
+//     wallet: 0,
+//     createBy: "admin",
+//     createAt: DateTime.now(),
+//     updateBy: "admin",
+//     updateAt: DateTime.now(),
+//   ),
+//   UserModel(
+//     name: "irfan",
+//     email: "irfan@gmail.com",
+//     password: "shinigami",
+//     hobby: "Game",
+//     wallet: 1000000,
+//     createBy: "admin",
+//     createAt: DateTime.now(),
+//     updateBy: "admin",
+//     updateAt: DateTime.now(),
+//   ),
+// ];

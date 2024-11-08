@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../entities/destination.dart';
 import 'destination_services.dart';
 import 'user_services.dart';
-import '../entities/destination.dart';
 import '../entities/transaction.dart';
 import '../entities/user.dart';
 import 'isar_services.dart';
@@ -12,22 +12,13 @@ import 'isar_services.dart';
 class TransactionServices extends IsarServices {
   void insertTransaction() async {
     final isar = await openDb();
+    final destination = await isar.destinations.where().findFirst();
     final dummyUser = User()
       ..email = "asaka@gmail.com"
       ..name = "Asaka"
       ..password = "s"
       ..hobby = "anime"
       ..wallet = 1000000
-      ..createBy = "admin"
-      ..createAt = DateTime.now()
-      ..updateBy = "admin"
-      ..updateAt = DateTime.now();
-    final dummyDestination = Destination()
-      ..imageUrl = "assets/image_destination_8.png"
-      ..name = "Roma"
-      ..location = "Italy"
-      ..rating = 4.8
-      ..price = 1000000
       ..createBy = "admin"
       ..createAt = DateTime.now()
       ..updateBy = "admin"
@@ -47,13 +38,12 @@ class TransactionServices extends IsarServices {
       ..updateBy = "admin"
       ..updateAt = DateTime.now()
       ..user.value = dummyUser
-      ..destination.value = dummyDestination;
+      ..destination.value = destination;
     final existTransaction = await isar.transactions.where().isEmpty();
     if (existTransaction) {
       await isar.writeTxn(
         () async {
           await isar.users.put(dummyUser);
-          await isar.destinations.put(dummyDestination);
           await isar.transactions.put(dummyTransaction);
           await dummyTransaction.user.save();
           await dummyTransaction.destination.save();
