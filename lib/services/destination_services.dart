@@ -10,7 +10,7 @@ class DestinationServices extends IsarServices {
   Future<void> insertDestination() async {
     final isar = await db;
     final existDestination = await isar.destinations.where().isEmpty();
-    if (existDestination == true) {
+    if (existDestination) {
       isar.writeTxn(
         () async {
           for (var destination in destinationList) {
@@ -60,8 +60,10 @@ class DestinationServices extends IsarServices {
     final existDestinations =
         await isar.destinations.where().idEqualTo(destinationId).findFirst();
     if (kDebugMode) {
-      print(
-          "Show destination ${existDestinations!.id}, ${existDestinations.name}, ${existDestinations.createBy}, ${existDestinations.createAt}, ${existDestinations.updateBy}, ${existDestinations.updateAt}");
+      if (existDestinations != null) {
+        print(
+            "Show destination ${existDestinations.id}, ${existDestinations.name}, ${existDestinations.createBy}, ${existDestinations.createAt}, ${existDestinations.updateBy}, ${existDestinations.updateAt}");
+      }
     }
   }
 }
@@ -158,94 +160,3 @@ List<Destination> destinationList = [
     ..updateAt = DateTime.now()
     ..updateBy = "admin",
 ];
-
-// List<DestinationModel> destinationList = [
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_1.png",
-//     name: "Lake Ciliwung",
-//     location: "Tangerang",
-//     rating: 4.8,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_2.png",
-//     name: "White Houses",
-//     location: "Spain",
-//     rating: 4.7,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_3.png",
-//     name: "Hill Heyo",
-//     location: "Monaco",
-//     rating: 4.8,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_4.png",
-//     name: "Temple",
-//     location: "Japan",
-//     rating: 5.0,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_5.png",
-//     name: "Payung Teduh",
-//     location: "Singapore",
-//     rating: 4.8,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_6.png",
-//     name: "Danau Beratan",
-//     location: "SingaJara",
-//     rating: 4.5,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_7.png",
-//     name: "Sydney Opera",
-//     location: "Australia",
-//     rating: 4.7,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-//   DestinationModel(
-//     imageUrl: "assets/image_destination_8.png",
-//     name: "Roma",
-//     location: "Italy",
-//     rating: 4.8,
-//     price: 1000000,
-//     createBy: "admin",
-//     createAt: DateTime.now(),
-//     updateBy: "admin",
-//     updateAt: DateTime.now(),
-//   ),
-// ];

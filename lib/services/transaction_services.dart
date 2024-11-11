@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../entities/destination.dart';
 import 'destination_services.dart';
@@ -52,18 +51,22 @@ class TransactionServices extends IsarServices {
     }
   }
 
-  Future<List<Transaction?>> getListTransaction() async {
+  Future<List<Transaction?>?> getListTransaction() async {
     final isar = await db;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final int? userId = prefs.getInt("userId");
-    final findTransaction = await isar.transactions
-        .filter()
-        .user(
-          (q) => q.idEqualTo(userId!),
-        )
-        .findAll();
-    showExistTransaction();
-    return findTransaction;
+
+    UserServices userServices = UserServices();
+    final userData = await userServices.getUser();
+    if (userData != null) {
+      final findTransaction = await isar.transactions
+          .filter()
+          .user(
+            (q) => q.idEqualTo(userData.id),
+          )
+          .findAll();
+      showExistTransaction();
+      return findTransaction;
+    }
+    return null;
   }
 
   Future<Transaction?> getTransaction(Id transactionId) async {
@@ -80,29 +83,33 @@ class TransactionServices extends IsarServices {
         await isar.transactions.filter().idEqualTo(transactionId).findFirst();
 
     if (kDebugMode) {
-      print(
-          "showTransactionById: user id = ${transaction!.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}, transaction statu = ${transaction.status}");
+      if (transaction != null) {
+        print(
+            "showTransactionById: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}, transaction statu = ${transaction.status}");
+      }
     }
   }
 
   void showExistTransaction() async {
     final isar = await db;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final int? userId = prefs.getInt("userId");
 
-    final existTransaction = await isar.transactions
-        .filter()
-        .user(
-          (q) => q.idEqualTo(userId!),
-        )
-        .findAll();
-    if (kDebugMode) {
-      if (existTransaction.isEmpty) {
-        print("There is no transaction data for this account");
-      } else {
-        for (var transaction in existTransaction) {
-          print(
-              "showExistTransaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}, transaction statu = ${transaction.status}");
+    UserServices userServices = UserServices();
+    final userData = await userServices.getUser();
+    if (userData != null) {
+      final existTransaction = await isar.transactions
+          .filter()
+          .user(
+            (q) => q.idEqualTo(userData.id),
+          )
+          .findAll();
+      if (kDebugMode) {
+        if (existTransaction.isEmpty) {
+          print("There is no transaction data for this account");
+        } else {
+          for (var transaction in existTransaction) {
+            print(
+                "showExistTransaction: user id = ${transaction.user.value?.id}, user name = ${transaction.user.value?.name}, destination id = ${transaction.destination.value?.id}, destination name = ${transaction.destination.value?.name}, transaction id = ${transaction.id}, seat = ${transaction.selectedSeat}, transaction statu = ${transaction.status}");
+          }
         }
       }
     }
