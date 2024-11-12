@@ -154,9 +154,9 @@ class UserServices extends IsarServices {
 }
 
 // Random Price
-const int maxPrince = 9000001;
-const int minPrice = 1000000;
-int randomPrice = Random().nextInt(maxPrince) + minPrice;
+const double maxPrince = 9000001;
+const double minPrice = 1000000;
+double randomPrice = Random().nextDouble() + maxPrince;
 
 List<User> userList = [
   User()

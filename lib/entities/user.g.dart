@@ -60,7 +60,7 @@ const UserSchema = CollectionSchema(
     r'wallet': PropertySchema(
       id: 8,
       name: r'wallet',
-      type: IsarType.long,
+      type: IsarType.double,
     )
   },
   estimateSize: _userEstimateSize,
@@ -113,7 +113,7 @@ void _userSerialize(
   writer.writeString(offsets[5], object.password);
   writer.writeDateTime(offsets[6], object.updateAt);
   writer.writeString(offsets[7], object.updateBy);
-  writer.writeLong(offsets[8], object.wallet);
+  writer.writeDouble(offsets[8], object.wallet);
 }
 
 User _userDeserialize(
@@ -132,7 +132,7 @@ User _userDeserialize(
   object.password = reader.readString(offsets[5]);
   object.updateAt = reader.readDateTime(offsets[6]);
   object.updateBy = reader.readString(offsets[7]);
-  object.wallet = reader.readLong(offsets[8]);
+  object.wallet = reader.readDouble(offsets[8]);
   return object;
 }
 
@@ -160,7 +160,7 @@ P _userDeserializeProp<P>(
     case 7:
       return (reader.readString(offset)) as P;
     case 8:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -1185,46 +1185,55 @@ extension UserQueryFilter on QueryBuilder<User, User, QFilterCondition> {
     });
   }
 
-  QueryBuilder<User, User, QAfterFilterCondition> walletEqualTo(int value) {
+  QueryBuilder<User, User, QAfterFilterCondition> walletEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'wallet',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<User, User, QAfterFilterCondition> walletGreaterThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'wallet',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<User, User, QAfterFilterCondition> walletLessThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'wallet',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<User, User, QAfterFilterCondition> walletBetween(
-    int lower,
-    int upper, {
+    double lower,
+    double upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1233,6 +1242,7 @@ extension UserQueryFilter on QueryBuilder<User, User, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        epsilon: epsilon,
       ));
     });
   }
@@ -1647,7 +1657,7 @@ extension UserQueryProperty on QueryBuilder<User, User, QQueryProperty> {
     });
   }
 
-  QueryBuilder<User, int, QQueryOperations> walletProperty() {
+  QueryBuilder<User, double, QQueryOperations> walletProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'wallet');
     });

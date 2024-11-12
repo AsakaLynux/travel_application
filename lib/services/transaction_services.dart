@@ -129,7 +129,7 @@ class TransactionServices extends IsarServices {
     UserServices userServices = UserServices();
     DestinationServices destinationServices = DestinationServices();
     final isar = await db;
-    final getUser = await userServices.getUser();
+    final userData = await userServices.getUser();
     final getDestination =
         await destinationServices.getDestination(destinationId);
     final transaction = Transaction()
@@ -142,14 +142,16 @@ class TransactionServices extends IsarServices {
       ..grandTotal = grandTotal
       ..status = "Successed"
       ..paymentNMethod = paymentMethod
-      ..createBy = getUser!.name
+      ..createBy = userData!.name
       ..createAt = DateTime.now()
-      ..updateBy = getUser.name
+      ..updateBy = userData.name
       ..updateAt = DateTime.now()
-      ..user.value = getUser
+      ..user.value = userData
       ..destination.value = getDestination;
     await isar.writeTxn(
       () async {
+        userData.wallet -= grandTotal;
+        await isar.users.put(userData);
         await isar.transactions.put(transaction);
         await transaction.user.save();
         await transaction.destination.save();

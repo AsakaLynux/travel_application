@@ -35,6 +35,7 @@ class DestinationServices extends IsarServices {
     final isar = await db;
     final allDestination = await isar.destinations.where().findAll();
 
+    // Sort
     final sortPriceAsc =
         await isar.destinations.where().sortByPrice().findAll();
     final sortPriceDesc =
@@ -59,10 +60,11 @@ class DestinationServices extends IsarServices {
       "sortLocationDesc": sortLocationDesc,
     };
     final List<Destination> destinations = sortMap[sort];
+
     if (kDebugMode) {
       for (var get in destinations) {
         print(
-            "Show all destinations ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
+            "Show sorted destinations ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
       }
     }
     return destinations;

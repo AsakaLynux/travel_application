@@ -16,7 +16,7 @@ class User {
 
   late String hobby;
 
-  late int wallet;
+  late double wallet;
 
   late String createBy;
 
