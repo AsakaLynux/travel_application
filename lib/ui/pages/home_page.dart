@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../model/sort_destination_model.dart';
 import 'transaction_detail_page.dart';
 import '../widget/custom_transaction_tile.dart';
 import '../../services/transaction_services.dart';
@@ -24,6 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
   bool obscure = true;
+  SortDestinationModel? selectedSortMethod;
 
   final TextEditingController nameController = TextEditingController(text: "");
   final TextEditingController emailController = TextEditingController(text: "");
@@ -49,52 +51,85 @@ class _HomePageState extends State<HomePage> {
     UserServices userServices = UserServices();
     TransactionServices transactionServices = TransactionServices();
     SharedServices sharedServices = SharedServices();
-    final fetchDestination = destinationServices.getListDestination();
+    final fetchDestination =
+        destinationServices.getListDestination("allDestination");
     final fetchUserInfo = userServices.getUser();
     userServices.showUser();
     final fetchTransaction = transactionServices.getListTransaction();
 
     Widget homePage() {
       Widget header() {
-        return FutureBuilder(
-          future: fetchUserInfo,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              return const Text("No Data");
-            } else {
-              return Container(
-                margin: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 250,
-                      child: Text(
-                        "Hallo,\n${snapshot.data?.name}",
-                        style: blackTextStyle.copyWith(
-                          fontSize: 24,
-                          fontWeight: semiBold,
+        Widget sortMethod() {
+          return DropdownButton<SortDestinationModel>(
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+            value: selectedSortMethod,
+            onChanged: (SortDestinationModel? newValue) {
+              setState(() {
+                selectedSortMethod = newValue;
+              });
+            },
+            items: sortDestinationMethodList.map(
+              (SortDestinationModel item) {
+                return DropdownMenuItem<SortDestinationModel>(
+                  value: item,
+                  child: Text(item.sortMethod),
+                );
+              },
+            ).toList(),
+          );
+        }
+
+        return Row(
+          children: [
+            FutureBuilder(
+              future: fetchUserInfo,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return const Text("No Data");
+                } else {
+                  return Container(
+                    margin: EdgeInsets.zero,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Hallo,\n${snapshot.data?.name}",
+                          style: blackTextStyle.copyWith(
+                            fontSize: 24,
+                            fontWeight: semiBold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                        const SizedBox(height: 6),
+                        Text(
+                          "Where to fly today?",
+                          style: greyTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: light,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      "Where to fly today?",
-                      style: greyTextStyle.copyWith(
-                        fontSize: 16,
-                        fontWeight: light,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
+                  );
+                }
+              },
+            ),
+            SizedBox(
+              child: Row(
+                children: [
+                  sortMethod(),
+                  const Text("Filter"),
+                ],
+              ),
+            ),
+          ],
         );
       }
 

@@ -6,11 +6,13 @@ Developing
         - Can delete account
         - Can delete transaction
     - Create test case for this application
+    - Make filter in transaction and destination service
     - Create wallet system (can add wallet, decrease wallet when transaction)
-    - Make filter and sort to transaction and destination
+    - Make sort and filter button in destination and transaction
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
 
 Testing
+    - Make sort in transaction and destination service
     
     
 

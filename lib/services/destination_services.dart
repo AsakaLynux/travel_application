@@ -31,10 +31,41 @@ class DestinationServices extends IsarServices {
     }
   }
 
-  Future<List<Destination>> getListDestination() async {
+  Future<List<Destination>> getListDestination(String sort) async {
     final isar = await db;
-    final existDestination = await isar.destinations.where().findAll();
-    return existDestination;
+    final allDestination = await isar.destinations.where().findAll();
+
+    final sortPriceAsc =
+        await isar.destinations.where().sortByPrice().findAll();
+    final sortPriceDesc =
+        await isar.destinations.where().sortByPriceDesc().findAll();
+
+    final sortNameAsc = await isar.destinations.where().sortByName().findAll();
+    final sortNameDesc =
+        await isar.destinations.where().sortByNameDesc().findAll();
+
+    final sortLocationAsc =
+        await isar.destinations.where().sortByLocation().findAll();
+    final sortLocationDesc =
+        await isar.destinations.where().sortByLocationDesc().findAll();
+
+    Map<String, dynamic> sortMap = {
+      "allDestination": allDestination,
+      "sortPriceAsc": sortPriceAsc,
+      "sortPriceDesc": sortPriceDesc,
+      "sortNameAsc": sortNameAsc,
+      "sortNameDesc": sortNameDesc,
+      "sortLocationAsc": sortLocationAsc,
+      "sortLocationDesc": sortLocationDesc,
+    };
+    final List<Destination> destinations = sortMap[sort];
+    if (kDebugMode) {
+      for (var get in destinations) {
+        print(
+            "Show all destinations ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
+      }
+    }
+    return destinations;
   }
 
   Future<Destination?> getDestination(Id id) async {
@@ -65,6 +96,41 @@ class DestinationServices extends IsarServices {
             "Show destination ${existDestinations.id}, ${existDestinations.name}, ${existDestinations.createBy}, ${existDestinations.createAt}, ${existDestinations.updateBy}, ${existDestinations.updateAt}");
       }
     }
+  }
+
+  Future<List<Destination?>> sortDestinations(String sort) async {
+    final Isar isar = await db;
+
+    final sortPriceAsc =
+        await isar.destinations.where().sortByPrice().findAll();
+    final sortPriceDesc =
+        await isar.destinations.where().sortByPriceDesc().findAll();
+
+    final sortNameAsc = await isar.destinations.where().sortByName().findAll();
+    final sortNameDesc =
+        await isar.destinations.where().sortByNameDesc().findAll();
+
+    final sortLocationAsc =
+        await isar.destinations.where().sortByLocation().findAll();
+    final sortLocationDesc =
+        await isar.destinations.where().sortByLocationDesc().findAll();
+
+    Map<String, dynamic> sortMap = {
+      "sortPriceAsc": sortPriceAsc,
+      "sortPriceDesc": sortPriceDesc,
+      "sortNameAsc": sortNameAsc,
+      "sortNameDesc": sortNameDesc,
+      "sortLocationAsc": sortLocationAsc,
+      "sortLocationDesc": sortLocationDesc,
+    };
+    final List<Destination> sortedDestinations = sortMap[sort];
+    if (kDebugMode) {
+      for (var get in sortedDestinations) {
+        print(
+            "Show all destinations ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
+      }
+    }
+    return sortedDestinations;
   }
 }
 
