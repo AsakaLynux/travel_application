@@ -10,13 +10,15 @@ Developing
     - Create wallet system
         - Add wallet
     - Make sort and filter button in destination and transaction
+        - Filter button
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
 
 Testing
     - Make sort in transaction and destination service
     - Create wallet system
         - Decrease wallet when transaction
-    
+    - Make sort and filter button in destination and transaction
+        - Sort button
     
 
 
