@@ -26,6 +26,7 @@ Testing
 
 Bug Fixing
     - Generate random destination price and destination rate
+    - nan value on user wallet, it should be double for balance
 
 
 
