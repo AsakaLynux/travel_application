@@ -1,12 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
 import '../../entities/user.dart';
+import '../../services/isar_services.dart';
 import '../../services/user_services.dart';
 import '../../shared/theme.dart';
 import '../widget/custom_button.dart';
 
-class BonusPage extends StatelessWidget {
+class BonusPage extends StatefulWidget {
   const BonusPage({super.key});
+
+  @override
+  State<BonusPage> createState() => _BonusPageState();
+}
+
+class _BonusPageState extends State<BonusPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _updateWalletUser();
+  }
+
+  Future<void> _updateWalletUser() async {
+    IsarServices isarServices = IsarServices();
+    UserServices userServices = UserServices();
+    final Isar isar = await isarServices.db;
+    final userData = await userServices.getUser();
+    if (userData != null) {
+      await isar.writeTxn(
+        () async {
+          userData.wallet += 1000000;
+          userData.updateAt = DateTime.now();
+          userData.updateBy = "admin";
+          await isar.users.put(userData);
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
