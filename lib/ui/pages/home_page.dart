@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
   bool obscure = true;
   SortDestinationModel? selectedSortMethod;
-
+  String sortDestinationMethod = "allDestination";
   final TextEditingController nameController = TextEditingController(text: "");
   final TextEditingController emailController = TextEditingController(text: "");
   final TextEditingController passwordController =
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     TransactionServices transactionServices = TransactionServices();
     SharedServices sharedServices = SharedServices();
     final fetchDestination =
-        destinationServices.getListDestination("allDestination");
+        destinationServices.getListDestination(sortDestinationMethod);
     final fetchUserInfo = userServices.getUser();
     userServices.showUser();
     final fetchTransaction = transactionServices.getListTransaction();
@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage> {
             onChanged: (SortDestinationModel? newValue) {
               setState(() {
                 selectedSortMethod = newValue;
+                sortDestinationMethod = newValue!.sortMethod;
               });
             },
             items: sortDestinationMethodList.map(
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 children: [
                   sortMethod(),
-                  const Text("Filter"),
+                  //const Text("Filter"),
                 ],
               ),
             ),

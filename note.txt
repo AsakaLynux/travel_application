@@ -18,18 +18,14 @@ Developing
         - transaction service
 
 Testing
-    - Make sort in transaction and destination service
-        - Destination service
     - Create wallet system
         - Decrease wallet when transaction
-    - Make sort and filter button in destination and transaction
-        - Sort button
     
 
 
 
 Bug Fixing
-
+    - Generate random destination price and destination rate
 
 
 
@@ -44,3 +40,7 @@ Done
     - Check all file in lib folder to correcting import file
     - Change getDestination to getListDestination (Change all file that have impact whit this change)
     - Add payment method in transaction intance (Update all method that related with transaction intance update)
+    - Make sort in transaction and destination service
+        - Destination service
+    - Make sort and filter button in destination and transaction
+        - Sort button
