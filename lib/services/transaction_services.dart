@@ -11,7 +11,7 @@ import 'isar_services.dart';
 class TransactionServices extends IsarServices {
   void insertTransaction() async {
     final isar = await openDb();
-    final destination = await isar.destinations.where().findFirst();
+    final destination = await isar.destinations.where().findAll();
     final dummyUser = User()
       ..email = "asaka@gmail.com"
       ..name = "Asaka"
@@ -37,7 +37,7 @@ class TransactionServices extends IsarServices {
       ..updateBy = "admin"
       ..updateAt = DateTime.now()
       ..user.value = dummyUser
-      ..destination.value = destination;
+      ..destination.value = destination.first;
     final existTransaction = await isar.transactions.where().isEmpty();
     if (existTransaction) {
       await isar.writeTxn(
@@ -51,20 +51,27 @@ class TransactionServices extends IsarServices {
     }
   }
 
-  Future<List<Transaction?>?> getListTransaction() async {
+  Future<List<Transaction?>?> getListTransaction(String sortMethod) async {
     final isar = await db;
 
     UserServices userServices = UserServices();
     final userData = await userServices.getUser();
     if (userData != null) {
-      final findTransaction = await isar.transactions
-          .filter()
-          .user(
+      final findTransaction = isar.transactions.filter().user(
             (q) => q.idEqualTo(userData.id),
-          )
-          .findAll();
+          );
+
+      final allTransaction = await findTransaction.findAll();
+      final sortDateAsc = await findTransaction.sortByCreateAt().findAll();
+      final sortDateDesc = await findTransaction.sortByCreateAtDesc().findAll();
+
+      Map<String, List<Transaction>> sortTransactionMap = {
+        "allTransaction": allTransaction,
+        "sortDateAsc": sortDateAsc,
+        "sortDateDesc": sortDateDesc,
+      };
       showExistTransaction();
-      return findTransaction;
+      return sortTransactionMap[sortMethod];
     }
     return null;
   }

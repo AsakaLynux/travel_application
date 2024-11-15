@@ -72,7 +72,7 @@ class DestinationServices extends IsarServices {
     if (kDebugMode) {
       for (var get in destinations) {
         print(
-            "Show sorted destinations ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
+            "Show $sort list ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
       }
     }
     return destinations;

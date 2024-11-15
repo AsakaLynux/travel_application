@@ -45,9 +45,9 @@ class IsarServices {
     if (adminExist.isEmpty) {
       await isar.writeTxn(
         () async {
-          await isar.transactions.where().deleteAll();
-          await isar.users.where().deleteAll();
-          await isar.destinations.where().deleteAll();
+          await isar.transactions.clear();
+          await isar.users.clear();
+          await isar.destinations.clear();
         },
       );
     }

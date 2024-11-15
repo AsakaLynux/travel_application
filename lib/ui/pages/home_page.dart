@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:travel_application/model/sort_transaction_mode.dart';
 
 import '../../model/sort_destination_model.dart';
 import 'transaction_detail_page.dart';
@@ -25,8 +26,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
   bool obscure = true;
-  SortDestinationModel? selectedSortMethod;
+  SortDestinationModel? selectedSortDestinationMethod;
+  SortTransactionMode? selectedSortTransactionMethod;
   String sortDestinationMethod = "allDestination";
+  String sortTransactionMethod = "allTransaction";
   final TextEditingController nameController = TextEditingController(text: "");
   final TextEditingController emailController = TextEditingController(text: "");
   final TextEditingController passwordController =
@@ -55,20 +58,21 @@ class _HomePageState extends State<HomePage> {
         destinationServices.getListDestination(sortDestinationMethod);
     final fetchUserInfo = userServices.getUser();
     userServices.showUser();
-    final fetchTransaction = transactionServices.getListTransaction();
+    final fetchTransaction =
+        transactionServices.getListTransaction(sortTransactionMethod);
 
     Widget homePage() {
       Widget header() {
-        Widget sortMethod() {
+        Widget DestinationSortMethod() {
           return DropdownButton<SortDestinationModel>(
             style: blackTextStyle.copyWith(
               fontSize: 16,
               fontWeight: semiBold,
             ),
-            value: selectedSortMethod,
+            value: selectedSortDestinationMethod,
             onChanged: (SortDestinationModel? newValue) {
               setState(() {
-                selectedSortMethod = newValue;
+                selectedSortDestinationMethod = newValue;
                 sortDestinationMethod = newValue!.sortMethod;
               });
             },
@@ -122,14 +126,7 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             ),
-            SizedBox(
-              child: Row(
-                children: [
-                  sortMethod(),
-                  //const Text("Filter"),
-                ],
-              ),
-            ),
+            DestinationSortMethod(),
           ],
         );
       }
@@ -393,6 +390,30 @@ class _HomePageState extends State<HomePage> {
         );
       }
 
+      Widget transactoinSortMethod() {
+        return DropdownButton<SortTransactionMode>(
+          style: blackTextStyle.copyWith(
+            fontSize: 16,
+            fontWeight: semiBold,
+          ),
+          value: selectedSortTransactionMethod,
+          onChanged: (SortTransactionMode? newValue) {
+            setState(() {
+              selectedSortTransactionMethod = newValue;
+              sortTransactionMethod = newValue!.sortMethod;
+            });
+          },
+          items: sortTransactionMethodList.map(
+            (SortTransactionMode item) {
+              return DropdownMenuItem<SortTransactionMode>(
+                value: item,
+                child: Text(item.sortMethod),
+              );
+            },
+          ).toList(),
+        );
+      }
+
       return SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -401,12 +422,17 @@ class _HomePageState extends State<HomePage> {
             children: [
               wallet(),
               const SizedBox(height: 10),
-              Text(
-                "History",
-                style: blackTextStyle.copyWith(
-                  fontSize: 18,
-                  fontWeight: semiBold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    "History",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 18,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  transactoinSortMethod(),
+                ],
               ),
               const SizedBox(height: 10),
               listTransaction(),
