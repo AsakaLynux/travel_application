@@ -16,6 +16,8 @@ List<SortDestinationModel> sortDestinationMethodList = [
   SortDestinationModel(5, "sortNameDesc"),
   SortDestinationModel(6, "sortLocationAsc"),
   SortDestinationModel(7, "sortLocationDesc"),
+  SortDestinationModel(8, "sortRatingAsc"),
+  SortDestinationModel(9, "sortRatingDesc"),
 ];
 
 

@@ -7,25 +7,25 @@ Developing
         - Can delete transaction
     - Create test case for this application
     - Make filter in transaction and destination service
+         - transaction service
+         - Destination service  
     - Create wallet system
         - Add wallet
     - Make sort and filter button in destination and transaction
         - Filter button
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
+    - Make sort in transaction and destination service
+        - transaction service
 
 Testing
-    - Make sort in transaction and destination service
     - Create wallet system
         - Decrease wallet when transaction
-    - Make sort and filter button in destination and transaction
-        - Sort button
-
     
 
 
 
 Bug Fixing
-
+    
 
 
 
@@ -40,3 +40,9 @@ Done
     - Check all file in lib folder to correcting import file
     - Change getDestination to getListDestination (Change all file that have impact whit this change)
     - Add payment method in transaction intance (Update all method that related with transaction intance update)
+    - Make sort and filter button in destination and transaction
+        - Sort button
+    - Generate random destination price and destination rate
+    - nan value on user wallet, it should be double for balance
+    - Make sort in transaction and destination service
+        - Destination service
