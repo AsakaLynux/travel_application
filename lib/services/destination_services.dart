@@ -50,6 +50,12 @@ class DestinationServices extends IsarServices {
     final sortLocationDesc =
         await isar.destinations.where().sortByLocationDesc().findAll();
 
+    final sortRatingAsc =
+        await isar.destinations.where().sortByRating().findAll();
+
+    final sortRatingDesc =
+        await isar.destinations.where().sortByRatingDesc().findAll();
+
     Map<String, dynamic> sortMap = {
       "allDestination": allDestination,
       "sortPriceAsc": sortPriceAsc,
@@ -58,6 +64,8 @@ class DestinationServices extends IsarServices {
       "sortNameDesc": sortNameDesc,
       "sortLocationAsc": sortLocationAsc,
       "sortLocationDesc": sortLocationDesc,
+      "sortRatingAsc": sortRatingAsc,
+      "sortRatingDesc": sortRatingDesc,
     };
     final List<Destination> destinations = sortMap[sort];
 
@@ -98,41 +106,6 @@ class DestinationServices extends IsarServices {
             "Show destination ${existDestinations.id}, ${existDestinations.name}, ${existDestinations.createBy}, ${existDestinations.createAt}, ${existDestinations.updateBy}, ${existDestinations.updateAt}");
       }
     }
-  }
-
-  Future<List<Destination?>> sortDestinations(String sort) async {
-    final Isar isar = await db;
-
-    final sortPriceAsc =
-        await isar.destinations.where().sortByPrice().findAll();
-    final sortPriceDesc =
-        await isar.destinations.where().sortByPriceDesc().findAll();
-
-    final sortNameAsc = await isar.destinations.where().sortByName().findAll();
-    final sortNameDesc =
-        await isar.destinations.where().sortByNameDesc().findAll();
-
-    final sortLocationAsc =
-        await isar.destinations.where().sortByLocation().findAll();
-    final sortLocationDesc =
-        await isar.destinations.where().sortByLocationDesc().findAll();
-
-    Map<String, dynamic> sortMap = {
-      "sortPriceAsc": sortPriceAsc,
-      "sortPriceDesc": sortPriceDesc,
-      "sortNameAsc": sortNameAsc,
-      "sortNameDesc": sortNameDesc,
-      "sortLocationAsc": sortLocationAsc,
-      "sortLocationDesc": sortLocationDesc,
-    };
-    final List<Destination> sortedDestinations = sortMap[sort];
-    if (kDebugMode) {
-      for (var get in sortedDestinations) {
-        print(
-            "Show all destinations ${get.id}, ${get.name}, ${get.createBy}, ${get.createAt}, ${get.updateBy}, ${get.updateAt}");
-      }
-    }
-    return sortedDestinations;
   }
 }
 

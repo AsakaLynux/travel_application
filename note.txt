@@ -25,8 +25,7 @@ Testing
 
 
 Bug Fixing
-    - Make sort in transaction and destination service
-        - Destination service
+    
 
 
 
@@ -45,3 +44,5 @@ Done
         - Sort button
     - Generate random destination price and destination rate
     - nan value on user wallet, it should be double for balance
+    - Make sort in transaction and destination service
+        - Destination service
