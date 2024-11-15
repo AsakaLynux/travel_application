@@ -512,7 +512,6 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CustomButton(
-                            // When delete user account, it must also delete the transaction history
                             text: "Delete",
                             width: 122,
                             onPressed: () async {

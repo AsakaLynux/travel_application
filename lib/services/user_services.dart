@@ -41,7 +41,7 @@ class UserServices extends IsarServices {
     final existUser =
         isar.users.filter().emailEqualTo(email).and().passwordEqualTo(password);
     if (kDebugMode) {
-      print('New User: $email, $password');
+      print('New User: Email $email, Password $password');
     }
     if (await existUser.isNotEmpty()) {
       return existUser.findFirst();
@@ -109,25 +109,25 @@ class UserServices extends IsarServices {
   }
 
   Future<bool> deleteUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final SharedServices sharedServices = SharedServices();
-    final int? userId = prefs.getInt("userId");
+    final userData = await getUser();
     final isar = await db;
-    final deleteTransaction = await isar.transactions
-        .filter()
-        .user(
-          (q) => q.idEqualTo(userId!),
-        )
-        .deleteAll();
-    final deleteUser = await isar.users.delete(userId!);
-
-    showUser();
-    isar.writeTxn(() async {
-      deleteTransaction;
-      deleteUser;
-    });
-    sharedServices.deleteCacheUser();
-    return true;
+    if (userData != null) {
+      isar.writeTxn(() async {
+        await isar.transactions
+            .filter()
+            .user(
+              (q) => q.idEqualTo(userData.id),
+            )
+            .deleteAll();
+        await isar.users.delete(userData.id);
+      });
+      showUser();
+      sharedServices.deleteCacheUser();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<bool> updateUser(
@@ -154,9 +154,12 @@ class UserServices extends IsarServices {
 }
 
 // Random Price
-const double maxPrince = 9000001;
-const double minPrice = 1000000;
-double randomPrice = Random().nextDouble() + maxPrince;
+double randomWallet() {
+  const double maxPrince = 9000001;
+  double value = Random().nextDouble() * maxPrince;
+  double wallet = double.parse(value.toStringAsFixed(0));
+  return wallet;
+}
 
 List<User> userList = [
   User()
@@ -164,7 +167,7 @@ List<User> userList = [
     ..email = "admin@admin.com"
     ..password = "admin"
     ..hobby = "Jadi admin"
-    ..wallet = randomPrice
+    ..wallet = randomWallet()
     ..createAt = DateTime.now()
     ..createBy = "admin"
     ..updateAt = DateTime.now()
@@ -174,7 +177,7 @@ List<User> userList = [
     ..email = "irfan@admin.com"
     ..password = "s"
     ..hobby = "Jadi admin"
-    ..wallet = randomPrice
+    ..wallet = randomWallet()
     ..createAt = DateTime.now()
     ..createBy = "admin"
     ..updateAt = DateTime.now()
