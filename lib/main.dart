@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_application/ui/admin/pages/account_page.dart';
+import 'package:travel_application/ui/admin/pages/admin_page.dart';
+import 'package:travel_application/ui/admin/pages/destination_page.dart';
+import 'package:travel_application/ui/admin/pages/transaction_page.dart';
 
 import 'provider/seat_provider.dart';
 import 'services/destination_services.dart';
@@ -49,13 +53,19 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => const StartedPage(),
-        "/SuccessCheckOutPage": (context) => const SuccessCheckoutPage(),
-        "/CheckOutPage": (context) => const CheckOutPage(),
-        "/ChooseSeatPage": (context) => const ChooseSeatPage(),
         "/SignInPage": (context) => const SignInPage(),
         "/SignUpPage": (context) => const SignUpPage(),
+        // Admin Page
+        "/AdminPage": (context) => const AdminPage(),
+        "/DestinationPage": (context) => const DestinationPage(),
+        "/TransactionPage": (context) => const TransactionPage(),
+        "AccountPage": (context) => const AccountPage(),
+        // User Page
         "/BonusPage": (context) => const BonusPage(),
         "/HomePage": (context) => const HomePage(),
+        "/ChooseSeatPage": (context) => const ChooseSeatPage(),
+        "/CheckOutPage": (context) => const CheckOutPage(),
+        "/SuccessCheckOutPage": (context) => const SuccessCheckoutPage(),
       },
     );
   }
