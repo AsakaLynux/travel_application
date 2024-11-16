@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../entities/user.dart';
 import '../../services/isar_services.dart';
@@ -15,18 +16,42 @@ class BonusPage extends StatefulWidget {
 }
 
 class _BonusPageState extends State<BonusPage> {
+  final bool _hasAccessedBefore = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _updateWalletUser();
+    _checkAccessStatus();
+    if (!_hasAccessedBefore) {
+      _updateWalletUser();
+    }
+  }
+
+  Future<void> _checkAccessStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool accessed = prefs.getBool('hasAccessedPage') ?? false;
+
+    if (accessed) {
+      // Navigate to another page directly if the page has been accessed
+      _navigateToNextPage();
+    } else {
+      // Set the page as accessed for the first time
+      await prefs.setBool('hasAccessedPage', true);
+    }
+  }
+
+  void _navigateToNextPage() {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      "/HomePage",
+      (Route<dynamic> route) => false,
+    );
   }
 
   Future<void> _updateWalletUser() async {
     IsarServices isarServices = IsarServices();
     UserServices userServices = UserServices();
     final Isar isar = await isarServices.db;
-    final userData = await userServices.getUser();
+    final User? userData = await userServices.getUser();
     if (userData != null) {
       await isar.writeTxn(
         () async {

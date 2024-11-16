@@ -1,15 +1,13 @@
 Developing
-    - If account already get in to bonus page, the account don't need to pass it again  
     - Search a method to check if isar writetxt is success or failed
     - Create admin page:
         - Can add destination
         - Can delete account
         - Can delete transaction
     - Create test case for this application
-    - Make filter in transaction service
-         - transaction service
     - Create wallet system
-        - Add wallet
+        - Add wallet balance in profile setting
+        - Add one time wallet balance when user in bonus page
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
     - Search a method for sorting more effective
     
@@ -21,6 +19,9 @@ Testing
         - transaction service
     - Make sort button in destination and transaction
         - transaction
+    - If account already get in to bonus page, the account don't need to pass it again  
+    - Create wallet system
+        - Add wallet balance in profile setting
 
 
 Bug Fixing
@@ -48,4 +49,6 @@ Done
 
 
 Panding
+    - Make filter in transaction service
+         - transaction service
     - Make filter button in transaction
