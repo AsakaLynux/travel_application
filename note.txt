@@ -10,7 +10,6 @@ Developing
          - transaction service
     - Create wallet system
         - Add wallet
-    - Make filter button in transaction
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
     - Search a method for sorting more effective
     
@@ -46,3 +45,7 @@ Done
     - nan value on user wallet, it should be double for balance
     - Make sort in transaction and destination service
         - Destination service
+
+
+Panding
+    - Make filter button in transaction

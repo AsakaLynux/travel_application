@@ -61,6 +61,7 @@ class TransactionServices extends IsarServices {
             (q) => q.idEqualTo(userData.id),
           );
 
+      // Sort
       final allTransaction = await findTransaction.findAll();
       final sortDateAsc = await findTransaction.sortByCreateAt().findAll();
       final sortDateDesc = await findTransaction.sortByCreateAtDesc().findAll();
@@ -70,6 +71,18 @@ class TransactionServices extends IsarServices {
         "sortDateAsc": sortDateAsc,
         "sortDateDesc": sortDateDesc,
       };
+
+      // Filter
+      // final successedTransaction =
+      //     await findTransaction.statusEqualTo("Successed").findAll();
+      // final canceledTransaction =
+      //     await findTransaction.statusEqualTo("Canceled").findAll();
+
+      // Map<String, List<Transaction>> filterTransactionMap = {
+      //   "successedTransaction": successedTransaction,
+      //   "canceledTransaction": canceledTransaction,
+      // };
+
       showExistTransaction();
       return sortTransactionMap[sortMethod];
     }
