@@ -3,8 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../services/user_services.dart';
 import '../../../shared/theme.dart';
-import '../widget/custom_button.dart';
-import '../widget/custom_text_field.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_text_field.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

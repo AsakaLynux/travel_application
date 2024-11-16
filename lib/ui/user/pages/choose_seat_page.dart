@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import '../../../provider/seat_provider.dart';
 import '../../../services/destination_services.dart';
 import '../../../shared/theme.dart';
-import '../widget/custom_button.dart';
-import '../widget/custom_choose_seat.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_choose_seat.dart';
 
 class ChooseSeatPage extends StatelessWidget {
   const ChooseSeatPage({super.key});

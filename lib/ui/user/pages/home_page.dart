@@ -4,16 +4,16 @@ import 'package:travel_application/model/sort_transaction_mode.dart';
 
 import '../../../model/sort_destination_model.dart';
 import 'transaction_detail_page.dart';
-import '../widget/custom_transaction_tile.dart';
+import '../../../widget/custom_transaction_tile.dart';
 import '../../../services/transaction_services.dart';
 import '../../../services/user_services.dart';
 import '../../../services/shared_services.dart';
 import '../../../services/destination_services.dart';
 import '../../../shared/theme.dart';
-import '../widget/custom_button.dart';
-import '../widget/custom_text_field.dart';
-import '../widget/custom_destination_card.dart';
-import '../widget/custom_destination_tile.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_text_field.dart';
+import '../../../widget/custom_destination_card.dart';
+import '../../../widget/custom_destination_tile.dart';
 import 'destination_detail_page.dart';
 
 class HomePage extends StatefulWidget {

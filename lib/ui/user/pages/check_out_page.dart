@@ -7,8 +7,8 @@ import "../../../model/payment_method_model.dart";
 import "../../../provider/seat_provider.dart";
 import "../../../services/destination_services.dart";
 import "../../../shared/theme.dart";
-import "../widget/custom_button.dart";
-import "../widget/custom_destination_tile.dart";
+import "../../../widget/custom_button.dart";
+import "../../../widget/custom_destination_tile.dart";
 
 class CheckOutPage extends StatefulWidget {
   const CheckOutPage({super.key});

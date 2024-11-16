@@ -5,8 +5,8 @@ import '../../../entities/transaction.dart';
 import '../../../services/destination_services.dart';
 import '../../../services/transaction_services.dart';
 import '../../../shared/theme.dart';
-import '../widget/custom_button.dart';
-import '../widget/custom_destination_tile.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_destination_tile.dart';
 
 class TransactionDetailPage extends StatelessWidget {
   const TransactionDetailPage({super.key});

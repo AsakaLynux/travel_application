@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import "../../../shared/theme.dart";
+import "../shared/theme.dart";
 
 class CustomDestinationCard extends StatelessWidget {
   final String? image;

@@ -6,7 +6,7 @@ import '../../../entities/user.dart';
 import '../../../services/isar_services.dart';
 import '../../../services/user_services.dart';
 import '../../../shared/theme.dart';
-import '../widget/custom_button.dart';
+import '../../../widget/custom_button.dart';
 
 class BonusPage extends StatefulWidget {
   const BonusPage({super.key});

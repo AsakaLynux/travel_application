@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../entities/destination.dart';
 import '../../../services/destination_services.dart';
 import '../../../shared/theme.dart';
-import '../widget/custom_button.dart';
-import '../widget/custom_photo_frame.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_photo_frame.dart';
 import 'choose_seat_page.dart';
 
 class DestinationDetailPage extends StatelessWidget {

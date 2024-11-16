@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
-import "../../../shared/theme.dart";
+import '../shared/theme.dart';
 
-class CustomDestinationTile extends StatelessWidget {
+class CustomTransactionTile extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String location;
-  final double rating;
-  const CustomDestinationTile({
+  final int person;
+  final double grandTotal;
+  final String status;
+  const CustomTransactionTile({
     super.key,
     required this.imageUrl,
     required this.name,
     required this.location,
-    required this.rating,
+    required this.person,
+    required this.grandTotal,
+    required this.status,
   });
 
   @override
@@ -21,7 +25,7 @@ class CustomDestinationTile extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(bottom: 10),
       width: 327,
-      height: 90,
+      // height: 110,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: kWhiteColor,
@@ -33,8 +37,8 @@ class CustomDestinationTile extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 70,
-                  height: 70,
+                  width: 100,
+                  height: 100,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     image: DecorationImage(
@@ -54,36 +58,42 @@ class CustomDestinationTile extends StatelessWidget {
                         fontWeight: medium,
                       ),
                     ),
-                    const SizedBox(height: 5),
                     Text(
                       location,
                       style: greyTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: light,
                       ),
-                    )
+                    ),
+                    Text(
+                      "Traveler: $person Person",
+                      style: greyTextStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: light,
+                      ),
+                      // overflow: TextOverflow.clip,
+                    ),
+                    Text(
+                      "GrandTotal: ${formatRupiah.format(
+                        grandTotal,
+                      )}",
+                      style: greyTextStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: light,
+                      ),
+                    ),
+                    Text(
+                      "Status: $status",
+                      style: greyTextStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: light,
+                      ),
+                    ),
                   ],
                 ),
               ],
             ),
           ),
-          SizedBox(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset("assets/icon_star.png", width: 24, height: 24),
-                const SizedBox(width: 5),
-                Text(
-                  rating.toString(),
-                  style: blackTextStyle.copyWith(
-                    fontSize: 14,
-                    fontWeight: medium,
-                  ),
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );

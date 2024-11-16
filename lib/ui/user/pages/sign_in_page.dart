@@ -5,8 +5,8 @@ import '../../../entities/user.dart';
 import '../../../services/shared_services.dart';
 import '../../../services/user_services.dart';
 import '../../../shared/theme.dart';
-import '../widget/custom_button.dart';
-import '../widget/custom_text_field.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_text_field.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

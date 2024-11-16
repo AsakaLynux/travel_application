@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 
 import "../../../shared/theme.dart";
-import "../widget/custom_button.dart";
+import "../../../widget/custom_button.dart";
 import "../../../provider/seat_provider.dart";
 
 class SuccessCheckoutPage extends StatelessWidget {
