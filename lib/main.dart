@@ -8,14 +8,14 @@ import 'services/isar_services.dart';
 import 'services/transaction_services.dart';
 import 'services/user_services.dart';
 import 'shared/theme.dart';
-import 'ui/pages/bonus_page.dart';
-import 'ui/pages/check_out_page.dart';
-import 'ui/pages/choose_seat_page.dart';
-import 'ui/pages/home_page.dart';
-import 'ui/pages/sign_in_page.dart';
-import 'ui/pages/sign_up_page.dart';
-import 'ui/pages/started_page.dart';
-import 'ui/pages/success_checkout_page.dart';
+import 'ui/user/pages/bonus_page.dart';
+import 'ui/user/pages/check_out_page.dart';
+import 'ui/user/pages/choose_seat_page.dart';
+import 'ui/user/pages/home_page.dart';
+import 'ui/user/pages/sign_in_page.dart';
+import 'ui/user/pages/sign_up_page.dart';
+import 'ui/user/pages/started_page.dart';
+import 'ui/user/pages/success_checkout_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

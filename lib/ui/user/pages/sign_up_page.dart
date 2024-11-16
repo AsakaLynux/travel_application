@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../entities/user.dart';
-import '../../services/shared_services.dart';
-import '../../services/user_services.dart';
-import '../../shared/theme.dart';
+import '../../../services/user_services.dart';
+import '../../../shared/theme.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_text_field.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   bool obscure = true;
-  SharedServices sharedServices = SharedServices();
+  bool confirmObscure = true;
+  final TextEditingController nameController = TextEditingController(text: "");
   final TextEditingController emailController = TextEditingController(text: "");
   final TextEditingController passwordController =
       TextEditingController(text: "");
+  final TextEditingController confirmPasswordController =
+      TextEditingController(text: "");
+  final TextEditingController hobbyController = TextEditingController(text: "");
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  void _visible() {
+  void _visiblePassword() {
     setState(() {
       if (obscure) {
         obscure = false;
@@ -32,17 +34,30 @@ class _SignInPageState extends State<SignInPage> {
     });
   }
 
-  Future<User?> _signIn() async {
+  void _visibleConfirmPassword() {
+    setState(() {
+      if (confirmObscure) {
+        confirmObscure = false;
+      } else {
+        confirmObscure = true;
+      }
+    });
+  }
+
+  Future<bool> _signUp() async {
     UserServices userServices = UserServices();
     userServices.showUser();
-    final validateUser = await userServices.signInUser(
-        emailController.text, passwordController.text);
-    return validateUser;
+    final signUpConfirmation = await userServices.signUpUser(
+        emailController.text,
+        nameController.text,
+        passwordController.text,
+        hobbyController.text);
+    return signUpConfirmation;
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget formSignIn() {
+    Widget formCard() {
       return Container(
         padding: const EdgeInsets.symmetric(
           vertical: 30,
@@ -56,6 +71,19 @@ class _SignInPageState extends State<SignInPage> {
           key: formKey,
           child: Column(
             children: [
+              CustomTextField(
+                titleText: "Username",
+                controller: nameController,
+                hintText: "AsakaLynux",
+                obscureText: false,
+                inputType: TextInputType.name,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter your username";
+                  }
+                  return null;
+                },
+              ),
               CustomTextField(
                   titleText: "Email Address",
                   controller: emailController,
@@ -77,7 +105,7 @@ class _SignInPageState extends State<SignInPage> {
                   inputType: TextInputType.text,
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      _visible();
+                      _visiblePassword();
                     },
                     child: Icon(obscure
                         ? Icons.lock_outline
@@ -89,21 +117,53 @@ class _SignInPageState extends State<SignInPage> {
                     }
                     return null;
                   }),
+              CustomTextField(
+                  titleText: "Confirm Password",
+                  controller: confirmPasswordController,
+                  obscureText: confirmObscure,
+                  inputType: TextInputType.text,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      _visibleConfirmPassword();
+                    },
+                    child: Icon(confirmObscure
+                        ? Icons.lock_outline
+                        : Icons.lock_open_outlined),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter your password";
+                    } else if (value != passwordController.text) {
+                      return "Password not same";
+                    }
+                    return null;
+                  }),
+              CustomTextField(
+                  titleText: "Hobby",
+                  controller: hobbyController,
+                  hintText: "Basket",
+                  obscureText: false,
+                  inputType: TextInputType.text,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter your hobby";
+                    }
+                    return null;
+                  }),
               CustomButton(
                 margin: const EdgeInsets.only(top: 30),
-                text: "Sign In",
+                text: "Sign Up",
                 width: 287,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    final User? signInResult = await _signIn();
-                    if (signInResult != null) {
-                      sharedServices.cacheUserInfo(signInResult.id);
+                    final bool signUpResult = await _signUp();
+                    if (signUpResult == true) {
                       if (context.mounted) {
-                        Navigator.pushReplacementNamed(context, "/BonusPage");
+                        Navigator.pushNamed(context, "/SignInPage");
                       }
                     } else {
                       return Fluttertoast.showToast(
-                        msg: "Wrong email or password",
+                        msg: "Email already exist!",
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
                         backgroundColor: kWhiteColor,
@@ -122,6 +182,7 @@ class _SignInPageState extends State<SignInPage> {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
+      /*resizeToAvoidBottomInset: true,*/
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -140,7 +201,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                formSignIn(),
+                formCard(),
               ],
             ),
           ),

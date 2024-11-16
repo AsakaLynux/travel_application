@@ -2,11 +2,11 @@ import "package:flutter/material.dart";
 import "package:fluttertoast/fluttertoast.dart";
 import "package:provider/provider.dart";
 
-import "../../services/transaction_services.dart";
-import "../../model/payment_method_model.dart";
-import "../../provider/seat_provider.dart";
-import "../../services/destination_services.dart";
-import "../../shared/theme.dart";
+import "../../../services/transaction_services.dart";
+import "../../../model/payment_method_model.dart";
+import "../../../provider/seat_provider.dart";
+import "../../../services/destination_services.dart";
+import "../../../shared/theme.dart";
 import "../widget/custom_button.dart";
 import "../widget/custom_destination_tile.dart";
 

@@ -7,7 +7,6 @@ Developing
     - Create test case for this application
     - Create wallet system
         - Add wallet balance in profile setting
-        - Add one time wallet balance when user in bonus page
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
     - Search a method for sorting more effective
     
@@ -21,7 +20,7 @@ Testing
         - transaction
     - If account already get in to bonus page, the account don't need to pass it again  
     - Create wallet system
-        - Add wallet balance in profile setting
+        - Add one time wallet balance when user in bonus page
 
 
 Bug Fixing

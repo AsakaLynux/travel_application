@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../entities/user.dart';
-import '../../services/isar_services.dart';
-import '../../services/user_services.dart';
-import '../../shared/theme.dart';
+import '../../../entities/user.dart';
+import '../../../services/isar_services.dart';
+import '../../../services/user_services.dart';
+import '../../../shared/theme.dart';
 import '../widget/custom_button.dart';
 
 class BonusPage extends StatefulWidget {

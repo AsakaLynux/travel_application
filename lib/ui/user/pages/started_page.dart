@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/theme.dart';
+import '../../../shared/theme.dart';
 import '../widget/custom_button.dart';
 
 class StartedPage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/seat_provider.dart';
-import '../../shared/theme.dart';
+import '../../../provider/seat_provider.dart';
+import '../../../shared/theme.dart';
 
 class CustomChooseSeat extends StatefulWidget {
   final int seatId;

@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/seat_provider.dart';
-import '../../services/destination_services.dart';
-import '../../shared/theme.dart';
+import '../../../provider/seat_provider.dart';
+import '../../../services/destination_services.dart';
+import '../../../shared/theme.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_choose_seat.dart';
 
