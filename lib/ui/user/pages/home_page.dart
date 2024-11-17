@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
 
     Widget homePage() {
       Widget header() {
-        Widget DestinationSortMethod() {
+        Widget destinationSortMethod() {
           return DropdownButton<SortDestinationModel>(
             style: blackTextStyle.copyWith(
               fontSize: 16,
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             ),
-            DestinationSortMethod(),
+            destinationSortMethod(),
           ],
         );
       }
