@@ -1,9 +1,17 @@
 Developing
     - Search a method to check if isar writetxt is success or failed
     - Create admin page:
-        - Can add destination
-        - Can delete account
-        - Can delete transaction
+        - Destination
+            - Create add destination page
+            - Create add destination isar function
+            - Search how to delete multiple destination using checkbox
+        - Account
+            - Create account page
+            - Search how to delete multiple account using checkbox 
+        - Transaction
+            - Create transaction page
+            - Search how to delete multiple transaction using checkbox
+            - If one of account or destination missing, then delete transaction
     - Create test case for this application
     - Create wallet system
         - Add wallet balance in profile setting
@@ -45,6 +53,9 @@ Done
     - nan value on user wallet, it should be double for balance
     - Make sort in transaction and destination service
         - Destination service
+    - Create admin page:
+        - Destination
+            - Create destination page
 
 
 Panding
