@@ -12,6 +12,7 @@ import 'services/isar_services.dart';
 import 'services/transaction_services.dart';
 import 'services/user_services.dart';
 import 'shared/theme.dart';
+import 'ui/admin/pages/add_destination_page.dart';
 import 'ui/user/pages/bonus_page.dart';
 import 'ui/user/pages/check_out_page.dart';
 import 'ui/user/pages/choose_seat_page.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         // Admin Page
         "/AdminPage": (context) => const AdminPage(),
         "/DestinationPage": (context) => const DestinationPage(),
+        "/AddDestinationPage": (context) => const AddDestinationPage(),
         "/TransactionPage": (context) => const TransactionPage(),
         "AccountPage": (context) => const AccountPage(),
         // User Page

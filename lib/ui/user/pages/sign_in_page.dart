@@ -99,7 +99,12 @@ class _SignInPageState extends State<SignInPage> {
                     if (signInResult != null) {
                       sharedServices.cacheUserInfo(signInResult.id);
                       if (context.mounted) {
-                        Navigator.pushReplacementNamed(context, "/BonusPage");
+                        if (signInResult.email == "admin@admin.com" &&
+                            signInResult.password == "admin") {
+                          Navigator.pushReplacementNamed(context, "/AdminPage");
+                        } else {
+                          Navigator.pushReplacementNamed(context, "/BonusPage");
+                        }
                       }
                     } else {
                       return Fluttertoast.showToast(
