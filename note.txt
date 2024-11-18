@@ -2,11 +2,14 @@ Developing
     - Search a method to check if isar writetxt is success or failed
     - Create admin page:
         - Destination
-            - Create add destination page
+            - Make delete destination isar function
+            - make update destination isar function
             - Create add destination isar function
             - Search how to delete multiple destination using checkbox
+            - Make search for destiantion list
         - Account
             - Create account page
+            - Make search for account list
             - Search how to delete multiple account using checkbox 
         - Transaction
             - Create transaction page
@@ -22,14 +25,16 @@ Developing
 Testing
     - Create wallet system
         - Decrease wallet when transaction
+        - Add one time wallet balance when user in bonus page
     - Make sort in transaction and destination service
         - transaction service
     - Make sort button in destination and transaction
         - transaction
     - If account already get in to bonus page, the account don't need to pass it again  
-    - Create wallet system
-        - Add one time wallet balance when user in bonus page
-
+    - Create admin page:
+        - Destination
+            - Create add destination page
+            
 
 Bug Fixing
     
