@@ -17,13 +17,14 @@ Developing
             - If one of account or destination missing, then delete transaction
     - Create test case for this application
     - Create wallet system
-        - Add wallet balance in profile setting
+        - Make user isar function to add wallet
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
     - Search a method for sorting more effective
     
 
 Testing
     - Create wallet system
+        - Add wallet balance in profile setting
         - Decrease wallet when transaction
         - Add one time wallet balance when user in bonus page
     - Make sort in transaction and destination service

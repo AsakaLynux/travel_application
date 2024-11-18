@@ -30,13 +30,18 @@ class _HomePageState extends State<HomePage> {
   SortTransactionMode? selectedSortTransactionMethod;
   String sortDestinationMethod = "allDestination";
   String sortTransactionMethod = "allTransaction";
+  // Controller for user form
   final TextEditingController nameController = TextEditingController(text: "");
   final TextEditingController emailController = TextEditingController(text: "");
   final TextEditingController passwordController =
       TextEditingController(text: "");
-
   final TextEditingController hobbyController = TextEditingController(text: "");
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  // Controller for add balance form
+  final TextEditingController balanceController =
+      TextEditingController(text: "");
+  final GlobalKey<FormState> formBalanceKey = GlobalKey<FormState>();
 
   void _visiblePassword() {
     setState(() {
@@ -570,65 +575,121 @@ class _HomePageState extends State<HomePage> {
                             text: "Save",
                             width: 122,
                             onPressed: () {
-                              dialog(() async {
-                                if (formKey.currentState!.validate()) {
-                                  bool updateUser =
-                                      await userServices.updateUser(
-                                    nameController.text,
-                                    emailController.text,
-                                    passwordController.text,
-                                    hobbyController.text,
-                                  );
-                                  if (updateUser) {
-                                    if (context.mounted) {
-                                      Navigator.pop(context);
+                              dialog(
+                                () async {
+                                  if (formKey.currentState!.validate()) {
+                                    bool updateUser =
+                                        await userServices.updateUser(
+                                      nameController.text,
+                                      emailController.text,
+                                      passwordController.text,
+                                      hobbyController.text,
+                                    );
+                                    if (updateUser) {
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
+                                      userServices.showUser();
+                                      return Fluttertoast.showToast(
+                                        msg: "Success Update Account",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        backgroundColor: kWhiteColor,
+                                        textColor: kBlackColor,
+                                        fontSize: 16.0,
+                                      );
+                                    } else {
+                                      return Fluttertoast.showToast(
+                                        msg: "Failed Update Account",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        backgroundColor: kWhiteColor,
+                                        textColor: kBlackColor,
+                                        fontSize: 16.0,
+                                      );
                                     }
-                                    userServices.showUser();
-                                    return Fluttertoast.showToast(
-                                      msg: "Success Update Account",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      backgroundColor: kWhiteColor,
-                                      textColor: kBlackColor,
-                                      fontSize: 16.0,
-                                    );
-                                  } else {
-                                    return Fluttertoast.showToast(
-                                      msg: "Failed Update Account",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      backgroundColor: kWhiteColor,
-                                      textColor: kBlackColor,
-                                      fontSize: 16.0,
-                                    );
                                   }
-                                }
-                              });
+                                },
+                              );
                             },
                           ),
                         ],
                       ),
                       CustomButton(
                         margin: const EdgeInsets.only(top: 20),
+                        text: "Top Up",
+                        width: 248,
+                        onPressed: () {
+                          return showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content: Form(
+                                key: formBalanceKey,
+                                child: CustomTextField(
+                                  titleText: "Balance",
+                                  controller: balanceController,
+                                  inputType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Field can not empty";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                              title: const Text("Add money"),
+                              actions: [
+                                CustomButton(
+                                  text: "Save",
+                                  width: 70,
+                                  onPressed: () {
+                                    if (formBalanceKey.currentState!
+                                        .validate()) {}
+                                  },
+                                ),
+                                CustomButton(
+                                  text: "Close",
+                                  width: 70,
+                                  backGroundColor: kRedColor,
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            ),
+                          );
+                          // return Fluttertoast.showToast(
+                          //   msg: "Success Log Out Account",
+                          //   toastLength: Toast.LENGTH_SHORT,
+                          //   gravity: ToastGravity.BOTTOM,
+                          //   backgroundColor: kWhiteColor,
+                          //   textColor: kBlackColor,
+                          //   fontSize: 16.0,
+                          // );
+                        },
+                      ),
+                      CustomButton(
+                        margin: const EdgeInsets.only(top: 20),
                         text: "Log Out",
                         width: 248,
                         onPressed: () {
-                          dialog(() {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              "/",
-                              (Route<dynamic> route) => false,
-                            );
-                            sharedServices.deleteCacheUser();
-                            return Fluttertoast.showToast(
-                              msg: "Success Log Out Account",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: kWhiteColor,
-                              textColor: kBlackColor,
-                              fontSize: 16.0,
-                            );
-                          });
+                          dialog(
+                            () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                "/",
+                                (Route<dynamic> route) => false,
+                              );
+                              sharedServices.deleteCacheUser();
+                              return Fluttertoast.showToast(
+                                msg: "Success Log Out Account",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: kWhiteColor,
+                                textColor: kBlackColor,
+                                fontSize: 16.0,
+                              );
+                            },
+                          );
                         },
                       ),
                     ],
