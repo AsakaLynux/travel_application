@@ -20,9 +20,15 @@ Developing
         - Make user isar function to add wallet
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
     - Search a method for sorting more effective
-    
+    - Add Uint8List data type for profile picture in user intance
+    - Change data type imageUrl (String) variable to Uint8List data type
+    - Make upload function for add destiantion (admin) and update profile picture user (user)
+        - add destiantion (admin)
+        - update profile picture user (user)
+    - Try using pageView widget for move between home, wallet, profile page
 
 Testing
+    - Change asset image to binary data (Update the other function or page that effect with this changes)
     - Create wallet system
         - Add wallet balance in profile setting
         - Decrease wallet when transaction

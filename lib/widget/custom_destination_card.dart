@@ -1,12 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import "../shared/theme.dart";
 
 class CustomDestinationCard extends StatelessWidget {
-  final String? image;
-  final String? title;
-  final double? rating;
-  final String? location;
+  final List<int> image;
+  final String title;
+  final double rating;
+  final String location;
   const CustomDestinationCard({
     super.key,
     required this.image,
@@ -34,37 +36,42 @@ class CustomDestinationCard extends StatelessWidget {
             height: 220,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(image!),
-              ),
             ),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 55,
-                height: 30,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(18),
-                  ),
-                  color: kWhiteColor,
+            child: Stack(
+              children: [
+                Image.memory(
+                  Uint8List.fromList(image),
+                  fit: BoxFit.cover,
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset("assets/icon_star.png", width: 24, height: 24),
-                    Text(
-                      rating.toString(),
-                      style: blackTextStyle.copyWith(
-                        fontSize: 14,
-                        fontWeight: medium,
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 55,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(18),
                       ),
+                      color: kWhiteColor,
                     ),
-                  ],
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset("assets/icon_star.png",
+                            width: 24, height: 24),
+                        Text(
+                          rating.toString(),
+                          style: blackTextStyle.copyWith(
+                            fontSize: 14,
+                            fontWeight: medium,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
           Container(
@@ -73,7 +80,7 @@ class CustomDestinationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title!,
+                  title,
                   style: blackTextStyle.copyWith(
                     fontSize: 18,
                     fontWeight: medium,
@@ -81,7 +88,7 @@ class CustomDestinationCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  location!,
+                  location,
                   style: greyTextStyle.copyWith(
                     fontSize: 14,
                     fontWeight: light,

@@ -255,7 +255,7 @@ class TransactionDetailPage extends StatelessWidget {
             return const Text("No Data");
           } else {
             return CustomDestinationTile(
-              imageUrl: destination.data!.imageUrl,
+              imageData: destination.data!.imageData,
               name: destination.data!.name,
               location: destination.data!.location,
               rating: destination.data!.rating,

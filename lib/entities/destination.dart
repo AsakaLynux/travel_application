@@ -8,7 +8,9 @@ part 'destination.g.dart';
 class Destination {
   Id id = Isar.autoIncrement; // you can also use id = null to auto increment
 
-  late String imageUrl;
+  late String imageTitle;
+
+  late List<int> imageData;
 
   late String name;
 

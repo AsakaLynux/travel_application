@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../../../entities/destination.dart';
@@ -64,22 +66,22 @@ class DestinationDetailPage extends StatelessWidget {
         height: 450,
         width: double.infinity,
         padding: const EdgeInsets.only(top: 40, bottom: 40),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage(
-              snapshot.data!.imageUrl,
-            ),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
           children: [
-            Image.asset(
-              "assets/image_emblem.png",
-              height: 24,
+            Image.memory(
+              Uint8List.fromList(snapshot.data!.imageData),
+              fit: BoxFit.cover,
             ),
-            destinationTitle(snapshot),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  "assets/image_emblem.png",
+                  height: 24,
+                ),
+                destinationTitle(snapshot),
+              ],
+            ),
           ],
         ),
       );

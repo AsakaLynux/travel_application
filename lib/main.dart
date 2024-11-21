@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_application/ui/admin/pages/account_page.dart';
-import 'package:travel_application/ui/admin/pages/admin_page.dart';
-import 'package:travel_application/ui/admin/pages/destination_page.dart';
-import 'package:travel_application/ui/admin/pages/transaction_page.dart';
 
 import 'provider/seat_provider.dart';
 import 'services/destination_services.dart';
@@ -12,7 +8,11 @@ import 'services/isar_services.dart';
 import 'services/transaction_services.dart';
 import 'services/user_services.dart';
 import 'shared/theme.dart';
+import 'ui/admin/pages/account_page.dart';
 import 'ui/admin/pages/add_destination_page.dart';
+import 'ui/admin/pages/admin_page.dart';
+import 'ui/admin/pages/destination_page.dart';
+import 'ui/admin/pages/transaction_page.dart';
 import 'ui/user/pages/bonus_page.dart';
 import 'ui/user/pages/check_out_page.dart';
 import 'ui/user/pages/choose_seat_page.dart';
@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: kPrimaryColor),
         useMaterial3: true,
+        scaffoldBackgroundColor: kBackgroundColor,
       ),
       // home: const HomePage(),
       initialRoute: "/",

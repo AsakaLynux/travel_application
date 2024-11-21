@@ -43,7 +43,7 @@ class DestinationPage extends StatelessWidget {
                       );
                     },
                     child: CustomDestinationTile(
-                      imageUrl: snapshot.data![index].imageUrl,
+                      imageData: snapshot.data![index].imageData,
                       name: snapshot.data![index].name,
                       location: snapshot.data![index].location,
                       rating: snapshot.data![index].rating,

@@ -1,9 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../shared/theme.dart';
 
 class CustomTransactionTile extends StatelessWidget {
-  final String imageUrl;
+  final List<int> imageData;
   final String name;
   final String location;
   final int person;
@@ -11,7 +13,7 @@ class CustomTransactionTile extends StatelessWidget {
   final String status;
   const CustomTransactionTile({
     super.key,
-    required this.imageUrl,
+    required this.imageData,
     required this.name,
     required this.location,
     required this.person,
@@ -41,10 +43,10 @@ class CustomTransactionTile extends StatelessWidget {
                   height: 100,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(imageUrl),
-                    ),
+                  ),
+                  child: Image.memory(
+                    Uint8List.fromList(imageData),
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(width: 16),

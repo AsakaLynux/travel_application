@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -10,12 +11,111 @@ class DestinationServices extends IsarServices {
   Future<void> insertDestination() async {
     final isar = await db;
     final existDestination = await isar.destinations.where().isEmpty();
+    List<Destination> destinationList = [
+      Destination()
+        ..imageTitle = "image_destination_1"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_1.png")
+        ..name = "Lake Ciliwung"
+        ..location = "Tangerang"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+      Destination()
+        ..imageTitle = "image_destination_2"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_2.png")
+        ..name = "White Houses"
+        ..location = "Spain"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+      Destination()
+        ..imageTitle = "image_destination_3"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_3.png")
+        ..name = "Hill Heyo"
+        ..location = "Monaco"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+      Destination()
+        ..imageTitle = "image_destination_4"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_4.png")
+        ..name = "Temple"
+        ..location = "Japan"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+      Destination()
+        ..imageTitle = "image_destination_5"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_5.png")
+        ..name = "Payung Teduh"
+        ..location = "Indonesia"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+      Destination()
+        ..imageTitle = "image_destination_6"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_6.png")
+        ..name = "Danau Beratan"
+        ..location = "Singajara"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+      Destination()
+        ..imageTitle = "image_destination_7"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_7.png")
+        ..name = "Sydney Opera"
+        ..location = "Australia"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+      Destination()
+        ..imageTitle = "image_destination_8"
+        ..imageData =
+            await convertImageFileToList("assets/image_destination_8.png")
+        ..name = "Roma"
+        ..location = "Italy"
+        ..rating = randomRating()
+        ..price = randomPrice()
+        ..createAt = DateTime.now()
+        ..createBy = "admin"
+        ..updateAt = DateTime.now()
+        ..updateBy = "admin",
+    ];
     if (existDestination) {
       isar.writeTxn(
         () async {
           for (var destination in destinationList) {
             final newDestination = Destination()
-              ..imageUrl = destination.imageUrl
+              ..imageTitle = destination.imageTitle
+              ..imageData = destination.imageData
               ..name = destination.name
               ..rating = destination.rating
               ..location = destination.location
@@ -125,85 +225,33 @@ double randomRating() {
   return rating;
 }
 
-List<Destination> destinationList = [
-  Destination()
-    ..imageUrl = "assets/image_destination_1.png"
-    ..name = "Lake Ciliwung"
-    ..location = "Tangerang"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
-  Destination()
-    ..imageUrl = "assets/image_destination_2.png"
-    ..name = "White Houses"
-    ..location = "Spain"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
-  Destination()
-    ..imageUrl = "assets/image_destination_3.png"
-    ..name = "Hill Heyo"
-    ..location = "Monaco"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
-  Destination()
-    ..imageUrl = "assets/image_destination_4.png"
-    ..name = "Temple"
-    ..location = "Japan"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
-  Destination()
-    ..imageUrl = "assets/image_destination_5.png"
-    ..name = "Payung Teduh"
-    ..location = "Indonesia"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
-  Destination()
-    ..imageUrl = "assets/image_destination_6.png"
-    ..name = "Danau Beratan"
-    ..location = "Singajara"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
-  Destination()
-    ..imageUrl = "assets/image_destination_7.png"
-    ..name = "Sydney Opera"
-    ..location = "Australia"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
-  Destination()
-    ..imageUrl = "assets/image_destination_8.png"
-    ..name = "Roma"
-    ..location = "Italy"
-    ..rating = randomRating()
-    ..price = randomPrice()
-    ..createAt = DateTime.now()
-    ..createBy = "admin"
-    ..updateAt = DateTime.now()
-    ..updateBy = "admin",
+Future<List<int>> convertImageFileToList(String imagePath) async {
+  try {
+    final File file = File(imagePath);
+    if (await file.exists()) {
+      Uint8List bytes = await file.readAsBytes();
+      return bytes.toList();
+    } else {
+      if (kDebugMode) {
+        print("File not found at path: $imagePath");
+      }
+      return [];
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      print("Error processing file at path: $imagePath, Error: $e");
+    }
+    return [];
+  }
+}
+
+const List<String> imagePath = [
+  "aseets/image_destination_1.png",
+  "aseets/image_destination_2.png",
+  "aseets/image_destination_3.png",
+  "aseets/image_destination_4.png",
+  "aseets/image_destination_5.png",
+  "aseets/image_destination_6.png",
+  "aseets/image_destination_7.png",
+  "aseets/image_destination_8.png",
 ];

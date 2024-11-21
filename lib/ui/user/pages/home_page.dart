@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                       child: CustomDestinationCard(
-                        image: snapshot.data![index].imageUrl,
+                        image: snapshot.data![index].imageData,
                         title: snapshot.data![index].name,
                         location: snapshot.data![index].location,
                         rating: snapshot.data![index].rating,
@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                       child: CustomDestinationTile(
-                        imageUrl: snapshot.data![index].imageUrl,
+                        imageData: snapshot.data![index].imageData,
                         name: snapshot.data![index].name,
                         location: snapshot.data![index].location,
                         rating: snapshot.data![index].rating,
@@ -378,8 +378,8 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                     child: CustomTransactionTile(
-                      imageUrl:
-                          snapshot.data![index]!.destination.value!.imageUrl,
+                      imageData:
+                          snapshot.data![index]!.destination.value!.imageData,
                       name: snapshot.data![index]!.destination.value!.name,
                       location:
                           snapshot.data![index]!.destination.value!.location,

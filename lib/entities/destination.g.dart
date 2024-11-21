@@ -27,38 +27,43 @@ const DestinationSchema = CollectionSchema(
       name: r'createBy',
       type: IsarType.string,
     ),
-    r'imageUrl': PropertySchema(
+    r'imageData': PropertySchema(
       id: 2,
-      name: r'imageUrl',
+      name: r'imageData',
+      type: IsarType.longList,
+    ),
+    r'imageTitle': PropertySchema(
+      id: 3,
+      name: r'imageTitle',
       type: IsarType.string,
     ),
     r'location': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'location',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'name',
       type: IsarType.string,
     ),
     r'price': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'price',
       type: IsarType.long,
     ),
     r'rating': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'rating',
       type: IsarType.double,
     ),
     r'updateAt': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'updateAt',
       type: IsarType.dateTime,
     ),
     r'updateBy': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'updateBy',
       type: IsarType.string,
     )
@@ -91,7 +96,8 @@ int _destinationEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.createBy.length * 3;
-  bytesCount += 3 + object.imageUrl.length * 3;
+  bytesCount += 3 + object.imageData.length * 8;
+  bytesCount += 3 + object.imageTitle.length * 3;
   bytesCount += 3 + object.location.length * 3;
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.updateBy.length * 3;
@@ -106,13 +112,14 @@ void _destinationSerialize(
 ) {
   writer.writeDateTime(offsets[0], object.createAt);
   writer.writeString(offsets[1], object.createBy);
-  writer.writeString(offsets[2], object.imageUrl);
-  writer.writeString(offsets[3], object.location);
-  writer.writeString(offsets[4], object.name);
-  writer.writeLong(offsets[5], object.price);
-  writer.writeDouble(offsets[6], object.rating);
-  writer.writeDateTime(offsets[7], object.updateAt);
-  writer.writeString(offsets[8], object.updateBy);
+  writer.writeLongList(offsets[2], object.imageData);
+  writer.writeString(offsets[3], object.imageTitle);
+  writer.writeString(offsets[4], object.location);
+  writer.writeString(offsets[5], object.name);
+  writer.writeLong(offsets[6], object.price);
+  writer.writeDouble(offsets[7], object.rating);
+  writer.writeDateTime(offsets[8], object.updateAt);
+  writer.writeString(offsets[9], object.updateBy);
 }
 
 Destination _destinationDeserialize(
@@ -125,13 +132,14 @@ Destination _destinationDeserialize(
   object.createAt = reader.readDateTime(offsets[0]);
   object.createBy = reader.readString(offsets[1]);
   object.id = id;
-  object.imageUrl = reader.readString(offsets[2]);
-  object.location = reader.readString(offsets[3]);
-  object.name = reader.readString(offsets[4]);
-  object.price = reader.readLong(offsets[5]);
-  object.rating = reader.readDouble(offsets[6]);
-  object.updateAt = reader.readDateTime(offsets[7]);
-  object.updateBy = reader.readString(offsets[8]);
+  object.imageData = reader.readLongList(offsets[2]) ?? [];
+  object.imageTitle = reader.readString(offsets[3]);
+  object.location = reader.readString(offsets[4]);
+  object.name = reader.readString(offsets[5]);
+  object.price = reader.readLong(offsets[6]);
+  object.rating = reader.readDouble(offsets[7]);
+  object.updateAt = reader.readDateTime(offsets[8]);
+  object.updateBy = reader.readString(offsets[9]);
   return object;
 }
 
@@ -147,18 +155,20 @@ P _destinationDeserializeProp<P>(
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongList(offset) ?? []) as P;
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 8:
+      return (reader.readDateTime(offset)) as P;
+    case 9:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -503,13 +513,159 @@ extension DestinationQueryFilter
     });
   }
 
-  QueryBuilder<Destination, Destination, QAfterFilterCondition> imageUrlEqualTo(
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataElementEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'imageData',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataElementGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'imageData',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataElementLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'imageData',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataElementBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'imageData',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'imageData',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'imageData',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'imageData',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'imageData',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'imageData',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageDataLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'imageData',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageTitleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -517,7 +673,7 @@ extension DestinationQueryFilter
   }
 
   QueryBuilder<Destination, Destination, QAfterFilterCondition>
-      imageUrlGreaterThan(
+      imageTitleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -525,7 +681,7 @@ extension DestinationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -533,7 +689,7 @@ extension DestinationQueryFilter
   }
 
   QueryBuilder<Destination, Destination, QAfterFilterCondition>
-      imageUrlLessThan(
+      imageTitleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -541,14 +697,15 @@ extension DestinationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Destination, Destination, QAfterFilterCondition> imageUrlBetween(
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageTitleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -557,7 +714,7 @@ extension DestinationQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'imageUrl',
+        property: r'imageTitle',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -568,13 +725,13 @@ extension DestinationQueryFilter
   }
 
   QueryBuilder<Destination, Destination, QAfterFilterCondition>
-      imageUrlStartsWith(
+      imageTitleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -582,13 +739,13 @@ extension DestinationQueryFilter
   }
 
   QueryBuilder<Destination, Destination, QAfterFilterCondition>
-      imageUrlEndsWith(
+      imageTitleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -596,22 +753,21 @@ extension DestinationQueryFilter
   }
 
   QueryBuilder<Destination, Destination, QAfterFilterCondition>
-      imageUrlContains(String value, {bool caseSensitive = true}) {
+      imageTitleContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Destination, Destination, QAfterFilterCondition> imageUrlMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Destination, Destination, QAfterFilterCondition>
+      imageTitleMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'imageUrl',
+        property: r'imageTitle',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -619,20 +775,20 @@ extension DestinationQueryFilter
   }
 
   QueryBuilder<Destination, Destination, QAfterFilterCondition>
-      imageUrlIsEmpty() {
+      imageTitleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: '',
       ));
     });
   }
 
   QueryBuilder<Destination, Destination, QAfterFilterCondition>
-      imageUrlIsNotEmpty() {
+      imageTitleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'imageUrl',
+        property: r'imageTitle',
         value: '',
       ));
     });
@@ -1305,15 +1461,15 @@ extension DestinationQuerySortBy
     });
   }
 
-  QueryBuilder<Destination, Destination, QAfterSortBy> sortByImageUrl() {
+  QueryBuilder<Destination, Destination, QAfterSortBy> sortByImageTitle() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imageUrl', Sort.asc);
+      return query.addSortBy(r'imageTitle', Sort.asc);
     });
   }
 
-  QueryBuilder<Destination, Destination, QAfterSortBy> sortByImageUrlDesc() {
+  QueryBuilder<Destination, Destination, QAfterSortBy> sortByImageTitleDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imageUrl', Sort.desc);
+      return query.addSortBy(r'imageTitle', Sort.desc);
     });
   }
 
@@ -1428,15 +1584,15 @@ extension DestinationQuerySortThenBy
     });
   }
 
-  QueryBuilder<Destination, Destination, QAfterSortBy> thenByImageUrl() {
+  QueryBuilder<Destination, Destination, QAfterSortBy> thenByImageTitle() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imageUrl', Sort.asc);
+      return query.addSortBy(r'imageTitle', Sort.asc);
     });
   }
 
-  QueryBuilder<Destination, Destination, QAfterSortBy> thenByImageUrlDesc() {
+  QueryBuilder<Destination, Destination, QAfterSortBy> thenByImageTitleDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'imageUrl', Sort.desc);
+      return query.addSortBy(r'imageTitle', Sort.desc);
     });
   }
 
@@ -1528,10 +1684,16 @@ extension DestinationQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Destination, Destination, QDistinct> distinctByImageUrl(
+  QueryBuilder<Destination, Destination, QDistinct> distinctByImageData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'imageData');
+    });
+  }
+
+  QueryBuilder<Destination, Destination, QDistinct> distinctByImageTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'imageUrl', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'imageTitle', caseSensitive: caseSensitive);
     });
   }
 
@@ -1595,9 +1757,15 @@ extension DestinationQueryProperty
     });
   }
 
-  QueryBuilder<Destination, String, QQueryOperations> imageUrlProperty() {
+  QueryBuilder<Destination, List<int>, QQueryOperations> imageDataProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'imageUrl');
+      return query.addPropertyName(r'imageData');
+    });
+  }
+
+  QueryBuilder<Destination, String, QQueryOperations> imageTitleProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'imageTitle');
     });
   }
 

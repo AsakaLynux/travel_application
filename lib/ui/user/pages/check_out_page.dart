@@ -183,7 +183,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   return const Text("No Data");
                 } else {
                   return CustomDestinationTile(
-                    imageUrl: snapshot.data!.imageUrl,
+                    imageData: snapshot.data!.imageData,
                     name: snapshot.data!.name,
                     location: snapshot.data!.location,
                     rating: snapshot.data!.rating,
