@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 
 import '../entities/destination.dart';
@@ -227,31 +227,13 @@ double randomRating() {
 
 Future<List<int>> convertImageFileToList(String imagePath) async {
   try {
-    final File file = File(imagePath);
-    if (await file.exists()) {
-      Uint8List bytes = await file.readAsBytes();
-      return bytes.toList();
-    } else {
-      if (kDebugMode) {
-        print("File not found at path: $imagePath");
-      }
-      return [];
-    }
+    final ByteData data = await rootBundle.load(imagePath);
+    Uint8List uint8Data = data.buffer.asUint8List();
+    return uint8Data.toList();
   } catch (e) {
     if (kDebugMode) {
-      print("Error processing file at path: $imagePath, Error: $e");
+      print("Error loading asset: $e");
     }
-    return [];
+    return Uint8List(0);
   }
 }
-
-const List<String> imagePath = [
-  "aseets/image_destination_1.png",
-  "aseets/image_destination_2.png",
-  "aseets/image_destination_3.png",
-  "aseets/image_destination_4.png",
-  "aseets/image_destination_5.png",
-  "aseets/image_destination_6.png",
-  "aseets/image_destination_7.png",
-  "aseets/image_destination_8.png",
-];

@@ -43,11 +43,12 @@ class _StartedPageState extends State<StartedPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CustomButton(
-                  text: "Sign In",
-                  width: 110,
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/SignInPage");
-                  }),
+                text: "Sign In",
+                width: 110,
+                onPressed: () {
+                  Navigator.pushNamed(context, "/SignInPage");
+                },
+              ),
               CustomButton(
                 text: "Sign Up",
                 width: 110,

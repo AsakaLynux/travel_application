@@ -2,11 +2,13 @@ Developing
     - Search a method to check if isar writetxt is success or failed
     - Create admin page:
         - Destination
-            - Make delete destination isar function
-            - make update destination isar function
+            - Make delete destination isar function (using trash icon in destination tile)
+            - Make update destination isar function
+            - Make destination detail page for update destination data
             - Create add destination isar function
+            - Make add destination page
             - Search how to delete multiple destination using checkbox
-            - Make search for destiantion list
+            - Make search for destination list in destination page
         - Account
             - Create account page
             - Make search for account list
@@ -21,34 +23,37 @@ Developing
     - Search a method for every clickable widget get a click, the Future builder dont get refresh
     - Search a method for sorting more effective
     - Add Uint8List data type for profile picture in user intance
-    - Change data type imageUrl (String) variable to Uint8List data type
     - Make upload function for add destiantion (admin) and update profile picture user (user)
         - add destiantion (admin)
         - update profile picture user (user)
     - Try using pageView widget for move between home, wallet, profile page
+    - correcting destiantion image widget after change call method
+    - if transaction price more than user balance then user can't do transaction
+    - Add transaction sorting for grand price, seat
 
 Testing
-    - Change asset image to binary data (Update the other function or page that effect with this changes)
-    - Create wallet system
-        - Add wallet balance in profile setting
-        - Decrease wallet when transaction
-        - Add one time wallet balance when user in bonus page
-    - Make sort in transaction and destination service
-        - transaction service
-    - Make sort button in destination and transaction
-        - transaction
-    - If account already get in to bonus page, the account don't need to pass it again  
-    - Create admin page:
-        - Destination
-            - Create add destination page
+
             
 
 Bug Fixing
-    
+    - Create wallet system
+        - Add one time wallet balance when user in bonus page (even the app already skip bonus page if user visited the page, but the add balance function still running)
+        - Add wallet balance in profile setting (bottom overflowed)
+  
 
 
 
 Done
+    - Create admin page:
+        - Destination
+            - Create add destination page
+    - Make sort in transaction and destination service
+        - transaction service
+    - Make sort button in destination and transaction
+        - transaction
+    - Create wallet system
+        - Decrease wallet when transaction
+    - Change asset image to binary data (Update the other function or page that effect with this changes)
     - Check and correcting syntax in service and model folder
     - Create delete transaction
     - If transaction status == canceled, then cancel button turn into delete button and run delete transaction function

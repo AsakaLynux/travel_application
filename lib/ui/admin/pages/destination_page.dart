@@ -12,7 +12,7 @@ class DestinationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     DestinationServices destinationServices = DestinationServices();
     final fetchDestination =
-        destinationServices.getListDestination("AllDestination");
+        destinationServices.getListDestination("allDestination");
 
     Widget listDestination() {
       return Expanded(
