@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'user_services.dart';
+
 class SharedServices {
   void cacheUserInfo(int userId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -9,15 +11,25 @@ class SharedServices {
 
   void deleteCacheUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('userId');
+    await prefs.remove("userId");
   }
 
-  Future<void> alreadyAccessBonusPage() async {
+  void deleteCacheBonusPage() async {
+    UserServices userServices = UserServices();
+    final userData = await userServices.getUser();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool accessed = prefs.getBool("hasAccessedPage") ?? false;
+    await prefs.remove("${userData!.id}hasAccessedPage");
+  }
+
+  Future<bool> alreadyAccessBonusPage() async {
+    UserServices userServices = UserServices();
+    final userData = await userServices.getUser();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool accessed = prefs.getBool("${userData!.id}hasAccessedPage") ?? false;
 
     if (!accessed) {
       await prefs.setBool("hasAccessedPage", true);
+      return false;
     }
     if (kDebugMode) {
       if (!accessed) {
@@ -26,5 +38,6 @@ class SharedServices {
         print("Not firts time in bonus page");
       }
     }
+    return true;
   }
 }
