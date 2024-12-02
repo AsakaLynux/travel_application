@@ -29,15 +29,17 @@ class SharedServices {
 
     if (!accessed) {
       await prefs.setBool("hasAccessedPage", true);
+      if (kDebugMode) {
+        print("Firts time in bonus page");
+      }
       return false;
     }
     if (kDebugMode) {
-      if (!accessed) {
-        print("Firts time in bonus page");
-      } else {
+      if (accessed) {
         print("Not firts time in bonus page");
       }
     }
+
     return true;
   }
 }

@@ -32,17 +32,19 @@ Developing
     - Add transaction sorting for grand price, seat
 
 Testing
-    - Create wallet system
-        - Add one time wallet balance when user in bonus page (even the app already skip bonus page if user visited the page, but the add balance function still running)
+    
             
 
 Bug Fixing
-        - Add wallet balance in profile setting (bottom overflowed)
+    - Create wallet system
+        - Add one time wallet balance when user in bonus page (even the app already skip bonus page if user visited the page, but the add balance function still running)
+        
   
 
 
 
 Done
+    - Add wallet balance in profile setting (bottom overflowed)
     - Create admin page:
         - Destination
             - Create add destination page

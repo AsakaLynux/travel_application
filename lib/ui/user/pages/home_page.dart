@@ -473,134 +473,94 @@ class _HomePageState extends State<HomePage> {
       }
 
       Widget formCard() {
-        return Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 15,
-            horizontal: 20,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(defaultRadius),
-            color: kWhiteColor,
-          ),
-          child: Form(
-            key: formKey,
-            child: FutureBuilder(
-              future: fetchUserInfo,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                } else if (!snapshot.hasData || snapshot.data == null) {
-                  return const Text("No Data");
-                } else {
-                  return Column(
-                    children: [
-                      CustomTextField(
-                        titleText: "Username",
-                        controller: nameController,
-                        hintText: snapshot.data!.name,
-                        obscureText: false,
-                        inputType: TextInputType.name,
-                      ),
-                      CustomTextField(
-                          titleText: "Email Address",
-                          controller: emailController,
-                          hintText: snapshot.data!.email,
+        return Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: 15,
+              horizontal: 20,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(defaultRadius),
+              color: kWhiteColor,
+            ),
+            child: Form(
+              key: formKey,
+              child: FutureBuilder(
+                future: fetchUserInfo,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  } else if (!snapshot.hasData || snapshot.data == null) {
+                    return const Text("No Data");
+                  } else {
+                    return ListView(
+                      children: [
+                        CustomTextField(
+                          titleText: "Username",
+                          controller: nameController,
+                          hintText: snapshot.data!.name,
                           obscureText: false,
-                          inputType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return null;
-                            } else if (!value.contains("@")) {
-                              return "Please enter with email format";
-                            }
-                            return null;
-                          }),
-                      CustomTextField(
-                        titleText: "Password",
-                        controller: passwordController,
-                        obscureText: obscure,
-                        inputType: TextInputType.text,
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            _visiblePassword();
-                          },
-                          child: Icon(obscure
-                              ? Icons.lock_outline
-                              : Icons.lock_open_outlined),
+                          inputType: TextInputType.name,
                         ),
-                      ),
-                      CustomTextField(
-                        titleText: "Hobby",
-                        controller: hobbyController,
-                        hintText: snapshot.data!.hobby,
-                        obscureText: false,
-                        inputType: TextInputType.text,
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CustomButton(
-                            text: "Delete",
-                            width: 122,
-                            onPressed: () async {
-                              dialog(
-                                () async {
-                                  final deleteUserInfo =
-                                      await userServices.deleteUser();
-                                  if (deleteUserInfo) {
-                                    if (context.mounted) {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        "/",
-                                        (Route<dynamic> route) => false,
-                                      );
-                                    }
-                                    return Fluttertoast.showToast(
-                                      msg: "Success Delete Account",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      backgroundColor: kWhiteColor,
-                                      textColor: kBlackColor,
-                                      fontSize: 16.0,
-                                    );
-                                  }
-                                },
-                              );
+                        CustomTextField(
+                            titleText: "Email Address",
+                            controller: emailController,
+                            hintText: snapshot.data!.email,
+                            obscureText: false,
+                            inputType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return null;
+                              } else if (!value.contains("@")) {
+                                return "Please enter with email format";
+                              }
+                              return null;
+                            }),
+                        CustomTextField(
+                          titleText: "Password",
+                          controller: passwordController,
+                          obscureText: obscure,
+                          inputType: TextInputType.text,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              _visiblePassword();
                             },
+                            child: Icon(obscure
+                                ? Icons.lock_outline
+                                : Icons.lock_open_outlined),
                           ),
-                          CustomButton(
-                            text: "Save",
-                            width: 122,
-                            onPressed: () {
-                              dialog(
-                                () async {
-                                  if (formKey.currentState!.validate()) {
-                                    bool updateUser =
-                                        await userServices.updateUser(
-                                      nameController.text,
-                                      emailController.text,
-                                      passwordController.text,
-                                      hobbyController.text,
-                                    );
-                                    if (updateUser) {
+                        ),
+                        CustomTextField(
+                          titleText: "Hobby",
+                          controller: hobbyController,
+                          hintText: snapshot.data!.hobby,
+                          obscureText: false,
+                          inputType: TextInputType.text,
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomButton(
+                              text: "Delete",
+                              width: 122,
+                              onPressed: () async {
+                                dialog(
+                                  () async {
+                                    final deleteUserInfo =
+                                        await userServices.deleteUser();
+                                    if (deleteUserInfo) {
                                       if (context.mounted) {
-                                        Navigator.pop(context);
+                                        Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          "/",
+                                          (Route<dynamic> route) => false,
+                                        );
                                       }
-                                      userServices.showUser();
                                       return Fluttertoast.showToast(
-                                        msg: "Success Update Account",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: kWhiteColor,
-                                        textColor: kBlackColor,
-                                        fontSize: 16.0,
-                                      );
-                                    } else {
-                                      return Fluttertoast.showToast(
-                                        msg: "Failed Update Account",
+                                        msg: "Success Delete Account",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         backgroundColor: kWhiteColor,
@@ -608,94 +568,136 @@ class _HomePageState extends State<HomePage> {
                                         fontSize: 16.0,
                                       );
                                     }
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      CustomButton(
-                        margin: const EdgeInsets.only(top: 20),
-                        text: "Top Up",
-                        width: 248,
-                        onPressed: () {
-                          return showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              content: Form(
-                                key: formBalanceKey,
-                                child: CustomTextField(
-                                  titleText: "Balance",
-                                  controller: balanceController,
-                                  inputType: TextInputType.number,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Field can not empty";
-                                    } else {
-                                      return null;
-                                    }
                                   },
-                                ),
-                              ),
-                              title: const Text("Add money"),
-                              actions: [
-                                CustomButton(
-                                  text: "Save",
-                                  width: 70,
-                                  onPressed: () {
-                                    if (formBalanceKey.currentState!
-                                        .validate()) {}
-                                  },
-                                ),
-                                CustomButton(
-                                  text: "Close",
-                                  width: 70,
-                                  backGroundColor: kRedColor,
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                              ],
+                                );
+                              },
                             ),
-                          );
-                          // return Fluttertoast.showToast(
-                          //   msg: "Success Log Out Account",
-                          //   toastLength: Toast.LENGTH_SHORT,
-                          //   gravity: ToastGravity.BOTTOM,
-                          //   backgroundColor: kWhiteColor,
-                          //   textColor: kBlackColor,
-                          //   fontSize: 16.0,
-                          // );
-                        },
-                      ),
-                      CustomButton(
-                        margin: const EdgeInsets.only(top: 20),
-                        text: "Log Out",
-                        width: 248,
-                        onPressed: () {
-                          dialog(
-                            () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                "/",
-                                (Route<dynamic> route) => false,
-                              );
-                              sharedServices.deleteCacheUser();
-                              return Fluttertoast.showToast(
-                                msg: "Success Log Out Account",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: kWhiteColor,
-                                textColor: kBlackColor,
-                                fontSize: 16.0,
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                }
-              },
+                            CustomButton(
+                              text: "Save",
+                              width: 122,
+                              onPressed: () {
+                                dialog(
+                                  () async {
+                                    if (formKey.currentState!.validate()) {
+                                      bool updateUser =
+                                          await userServices.updateUser(
+                                        nameController.text,
+                                        emailController.text,
+                                        passwordController.text,
+                                        hobbyController.text,
+                                      );
+                                      if (updateUser) {
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
+                                        }
+                                        userServices.showUser();
+                                        return Fluttertoast.showToast(
+                                          msg: "Success Update Account",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: kWhiteColor,
+                                          textColor: kBlackColor,
+                                          fontSize: 16.0,
+                                        );
+                                      } else {
+                                        return Fluttertoast.showToast(
+                                          msg: "Failed Update Account",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: kWhiteColor,
+                                          textColor: kBlackColor,
+                                          fontSize: 16.0,
+                                        );
+                                      }
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        CustomButton(
+                          margin: const EdgeInsets.only(top: 20),
+                          text: "Top Up",
+                          width: 248,
+                          onPressed: () {
+                            return showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                content: Form(
+                                  key: formBalanceKey,
+                                  child: CustomTextField(
+                                    titleText: "Balance",
+                                    controller: balanceController,
+                                    inputType: TextInputType.number,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Field can not empty";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                ),
+                                title: const Text("Add money"),
+                                actions: [
+                                  CustomButton(
+                                    text: "Save",
+                                    width: 70,
+                                    onPressed: () {
+                                      if (formBalanceKey.currentState!
+                                          .validate()) {}
+                                    },
+                                  ),
+                                  CustomButton(
+                                    text: "Close",
+                                    width: 70,
+                                    backGroundColor: kRedColor,
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                ],
+                              ),
+                            );
+                            // return Fluttertoast.showToast(
+                            //   msg: "Success Log Out Account",
+                            //   toastLength: Toast.LENGTH_SHORT,
+                            //   gravity: ToastGravity.BOTTOM,
+                            //   backgroundColor: kWhiteColor,
+                            //   textColor: kBlackColor,
+                            //   fontSize: 16.0,
+                            // );
+                          },
+                        ),
+                        CustomButton(
+                          margin: const EdgeInsets.only(top: 20),
+                          text: "Log Out",
+                          width: 248,
+                          onPressed: () {
+                            dialog(
+                              () {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  "/",
+                                  (Route<dynamic> route) => false,
+                                );
+                                sharedServices.deleteCacheUser();
+                                return Fluttertoast.showToast(
+                                  msg: "Success Log Out Account",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: kWhiteColor,
+                                  textColor: kBlackColor,
+                                  fontSize: 16.0,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
           ),
         );
