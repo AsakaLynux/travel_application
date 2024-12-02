@@ -27,7 +27,6 @@ Developing
         - add destiantion (admin)
         - update profile picture user (user)
     - Try using pageView widget for move between home, wallet, profile page
-    - correcting destiantion image widget after change call method
     - if transaction price more than user balance then user can't do transaction
     - Add transaction sorting for grand price, seat
 
@@ -36,13 +35,14 @@ Testing
             
 
 Bug Fixing
-    
+    - When i choose seat like said A1, B2. then i click back button, the state of seat that i choose still remaining. Because of that, when i choose the other destination, the state still there
         
   
 
 
 
 Done
+    - correcting destiantion image widget after change call method
     - Create wallet system
         - Add one time wallet balance when user in bonus page (even the app already skip bonus page if user visited the page, but the add balance function still running)
     - Add wallet balance in profile setting (bottom overflowed)

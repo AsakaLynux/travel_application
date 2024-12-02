@@ -68,9 +68,13 @@ class DestinationDetailPage extends StatelessWidget {
         padding: const EdgeInsets.only(top: 40, bottom: 40),
         child: Stack(
           children: [
-            Image.memory(
-              Uint8List.fromList(snapshot.data!.imageData),
-              fit: BoxFit.cover,
+            SizedBox(
+              height: 450,
+              width: double.infinity,
+              child: Image.memory(
+                Uint8List.fromList(snapshot.data!.imageData),
+                fit: BoxFit.fill,
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
