@@ -36,14 +36,15 @@ Testing
             
 
 Bug Fixing
-    - Create wallet system
-        - Add one time wallet balance when user in bonus page (even the app already skip bonus page if user visited the page, but the add balance function still running)
+    
         
   
 
 
 
 Done
+    - Create wallet system
+        - Add one time wallet balance when user in bonus page (even the app already skip bonus page if user visited the page, but the add balance function still running)
     - Add wallet balance in profile setting (bottom overflowed)
     - Create admin page:
         - Destination

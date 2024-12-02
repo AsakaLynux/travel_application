@@ -28,15 +28,15 @@ class SharedServices {
     bool accessed = prefs.getBool("${userData!.id}hasAccessedPage") ?? false;
 
     if (!accessed) {
-      await prefs.setBool("hasAccessedPage", true);
+      await prefs.setBool("${userData.id}hasAccessedPage", true);
       if (kDebugMode) {
-        print("Firts time in bonus page");
+        print("First time in bonus page");
       }
       return false;
     }
     if (kDebugMode) {
       if (accessed) {
-        print("Not firts time in bonus page");
+        print("Not first time in bonus page");
       }
     }
 
