@@ -790,6 +790,38 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    Future<bool?> showBackDialog() {
+      return showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Are you sure?"),
+            content: const Text("Are you sure you want to leave this page?"),
+            actions: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text("Nevermind"),
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text("Leave"),
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       resizeToAvoidBottomInset: false,
@@ -797,6 +829,21 @@ class _HomePageState extends State<HomePage> {
         homePage(),
         walletPage(),
         profilePage(),
+        PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) {
+              return;
+            }
+            final bool shouldPop = await showBackDialog() ?? false;
+            if (shouldPop) {
+              if (context.mounted && shouldPop) {
+                Navigator.pop(context);
+              }
+            }
+          },
+          child: const SizedBox(),
+        ),
       ][currentPageIndex],
       bottomNavigationBar: bottomNavigationBar(),
     );

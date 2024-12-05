@@ -29,9 +29,10 @@ Developing
     - Try using pageView widget for move between home, wallet, profile page
     - if transaction price more than user balance then user can't do transaction
     - Add transaction sorting for grand price, seat
+    
 
 Testing
-    
+    - When user want to close the application at home page, it will have confirmation
             
 
 Bug Fixing
