@@ -585,6 +585,7 @@ class _HomePageState extends State<HomePage> {
                                         emailController.text,
                                         passwordController.text,
                                         hobbyController.text,
+                                        0.0,
                                       );
                                       if (updateUser) {
                                         if (context.mounted) {
@@ -644,9 +645,38 @@ class _HomePageState extends State<HomePage> {
                                   CustomButton(
                                     text: "Save",
                                     width: 70,
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      double balance = double.parse(
+                                          balanceController.value.text);
                                       if (formBalanceKey.currentState!
-                                          .validate()) {}
+                                          .validate()) {
+                                        bool updateUser =
+                                            await userServices.updateUser(
+                                                "", "", "", "", balance);
+                                        if (updateUser) {
+                                          if (context.mounted) {
+                                            Navigator.pop(context);
+                                          }
+                                          userServices.showUser();
+                                          return Fluttertoast.showToast(
+                                            msg: "Success Update Account",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            backgroundColor: kWhiteColor,
+                                            textColor: kBlackColor,
+                                            fontSize: 16.0,
+                                          );
+                                        } else {
+                                          return Fluttertoast.showToast(
+                                            msg: "Failed Update Account",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            backgroundColor: kWhiteColor,
+                                            textColor: kBlackColor,
+                                            fontSize: 16.0,
+                                          );
+                                        }
+                                      }
                                     },
                                   ),
                                   CustomButton(

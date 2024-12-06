@@ -135,18 +135,22 @@ class UserServices extends IsarServices {
     String? email,
     String? password,
     String? hobby,
+    double? wallet,
   ) async {
     final isar = await db;
     final userData = await getUser();
 
     isar.writeTxn(() async {
-      userData?.name = name!.isEmpty ? userData.name : name;
-      userData?.email = email!.isEmpty ? userData.email : email;
-      userData?.password = password!.isEmpty ? userData.password : password;
-      userData?.hobby = hobby!.isEmpty ? userData.hobby : hobby;
-      userData?.updateBy = name!.isEmpty ? userData.name : name;
-      userData?.updateAt = DateTime.now();
-      await isar.users.put(userData!);
+      if (userData != null) {
+        userData.name = name!.isEmpty ? userData.name : name;
+        userData.email = email!.isEmpty ? userData.email : email;
+        userData.password = password!.isEmpty ? userData.password : password;
+        userData.hobby = hobby!.isEmpty ? userData.hobby : hobby;
+        userData.wallet = userData.wallet + wallet!;
+        userData.updateBy = name.isEmpty ? userData.name : name;
+        userData.updateAt = DateTime.now();
+        await isar.users.put(userData);
+      }
     });
 
     return true;
