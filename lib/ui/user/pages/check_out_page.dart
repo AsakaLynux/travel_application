@@ -6,6 +6,7 @@ import "../../../services/transaction_services.dart";
 import "../../../model/payment_method_model.dart";
 import "../../../provider/seat_provider.dart";
 import "../../../services/destination_services.dart";
+import "../../../services/user_services.dart";
 import "../../../shared/theme.dart";
 import "../../../widget/custom_button.dart";
 import "../../../widget/custom_destination_tile.dart";
@@ -21,6 +22,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   PaymentMethod? selectedPayment;
   DestinationServices destinationServices = DestinationServices();
   TransactionServices transactionServices = TransactionServices();
+  UserServices userServices = UserServices();
 
   late int amountOfTraveler;
   late String selectedSeat;
@@ -288,6 +290,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
               text: "Pay Now",
               width: 327,
               onPressed: () async {
+                final userData = await userServices.getUser();
                 final transaction = await transactionServices.addTransaction(
                     amountOfTraveler,
                     selectedSeat,
@@ -298,22 +301,32 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     grandTotal,
                     destinationId,
                     selectedPayment!.name);
-
-                if (transaction) {
-                  if (context.mounted) {
-                    Navigator.pushNamed(context, "/SuccessCheckOutPage");
+                if (userData != null && userData.wallet < grandTotal) {
+                  if (transaction) {
+                    if (context.mounted) {
+                      Navigator.pushNamed(context, "/SuccessCheckOutPage");
+                    }
+                    return Fluttertoast.showToast(
+                      msg: "Transaction Success",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: kWhiteColor,
+                      textColor: kBlackColor,
+                      fontSize: 16.0,
+                    );
+                  } else {
+                    return Fluttertoast.showToast(
+                      msg: "Transaction Failed",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: kWhiteColor,
+                      textColor: kBlackColor,
+                      fontSize: 16.0,
+                    );
                   }
-                  return Fluttertoast.showToast(
-                    msg: "Transaction Success",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    backgroundColor: kWhiteColor,
-                    textColor: kBlackColor,
-                    fontSize: 16.0,
-                  );
                 } else {
                   return Fluttertoast.showToast(
-                    msg: "Transaction Failed",
+                    msg: "You don't have enough money",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     backgroundColor: kWhiteColor,
