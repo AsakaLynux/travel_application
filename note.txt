@@ -33,10 +33,10 @@ Developing
 
 Testing
     - When user want to close the application at home page, it will have confirmation
+    - When i choose seat like said A1, B2. then i click back button, the state of seat that i choose still remaining. Because of that, when i choose the other destination, the state still there
             
 
 Bug Fixing
-    - When i choose seat like said A1, B2. then i click back button, the state of seat that i choose still remaining. Because of that, when i choose the other destination, the state still there
         
   
 
