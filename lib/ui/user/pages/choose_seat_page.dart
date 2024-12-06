@@ -25,6 +25,38 @@ class ChooseSeatPage extends StatelessWidget {
       return randomSeatId;
     }
 
+    Future<bool?> showBackDialog() {
+      return showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Are you sure?"),
+            content: const Text("Are you sure you want to leave this page?"),
+            actions: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text("Nevermind"),
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text("Leave"),
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     Widget seatLegend() {
       Widget legend(String imageUrl, String text) {
         return SizedBox(
@@ -260,6 +292,23 @@ class ChooseSeatPage extends StatelessWidget {
                     Navigator.pushNamed(context, "/CheckOutPage",
                         arguments: destinationId);
                   },
+                ),
+                PopScope(
+                  canPop: false,
+                  onPopInvokedWithResult: (didPop, result) async {
+                    if (didPop) {
+                      return;
+                    }
+                    final bool shouldPop = await showBackDialog() ?? false;
+                    if (shouldPop) {
+                      if (context.mounted && shouldPop) {
+                        Provider.of<SeatProvider>(context, listen: false)
+                            .removeAllSeatNumber();
+                        Navigator.pop(context);
+                      }
+                    }
+                  },
+                  child: const SizedBox(),
                 ),
               ],
             ),
