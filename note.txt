@@ -2,7 +2,6 @@ Developing
     - Search a method to check if isar writetxt is success or failed
     - Create admin page:
         - Destination
-            - Make delete destination isar function (using trash icon in destination tile)
             - Make update destination isar function
             - Make destination detail page for update destination data
             - Create add destination isar function
@@ -34,6 +33,9 @@ Testing
     - if transaction price more than user balance then user can't do transaction
     - Create wallet system
         - Make user isar function to add wallet        
+    - Create admin page:
+        - Destination
+            - Make delete destination isar function (using trash icon in destination tile)
 
 Bug Fixing
         

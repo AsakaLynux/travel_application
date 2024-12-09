@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import '../services/destination_services.dart';
 import "../shared/theme.dart";
 
 class CustomDestinationTile extends StatelessWidget {
@@ -9,12 +11,16 @@ class CustomDestinationTile extends StatelessWidget {
   final String name;
   final String location;
   final double rating;
+  final bool admin;
+  final int destinationId;
   const CustomDestinationTile({
     super.key,
     required this.imageData,
     required this.name,
     required this.location,
     required this.rating,
+    required this.destinationId,
+    this.admin = false,
   });
 
   @override
@@ -65,6 +71,34 @@ class CustomDestinationTile extends StatelessWidget {
                       ),
                     )
                   ],
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    DestinationServices destinationServices =
+                        DestinationServices();
+                    bool deleteDestination = await destinationServices
+                        .deleteDestination(destinationId);
+                    if (deleteDestination) {
+                      Fluttertoast.showToast(
+                        msg: "Success Delete Destination",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: kWhiteColor,
+                        textColor: kBlackColor,
+                        fontSize: 16.0,
+                      );
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: "Failed Delete Destination",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: kWhiteColor,
+                        textColor: kBlackColor,
+                        fontSize: 16.0,
+                      );
+                    }
+                  },
+                  child: const Icon(Icons.delete_outline),
                 ),
               ],
             ),

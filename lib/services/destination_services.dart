@@ -207,6 +207,16 @@ class DestinationServices extends IsarServices {
       }
     }
   }
+
+  Future<bool> deleteDestination(Id destinationId) async {
+    final isar = await db;
+
+    await isar.writeTxn(() async {
+      await isar.destinations.delete(destinationId);
+    });
+
+    return true;
+  }
 }
 
 // Random Price

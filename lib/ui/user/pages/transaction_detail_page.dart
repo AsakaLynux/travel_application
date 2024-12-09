@@ -259,6 +259,7 @@ class TransactionDetailPage extends StatelessWidget {
               name: destination.data!.name,
               location: destination.data!.location,
               rating: destination.data!.rating,
+              destinationId: destination.data!.id,
             );
           }
         },

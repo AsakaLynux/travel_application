@@ -189,6 +189,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     name: snapshot.data!.name,
                     location: snapshot.data!.location,
                     rating: snapshot.data!.rating,
+                    destinationId: snapshot.data!.id,
                   );
                 }
               },

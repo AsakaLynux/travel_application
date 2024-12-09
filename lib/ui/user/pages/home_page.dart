@@ -214,6 +214,7 @@ class _HomePageState extends State<HomePage> {
                         name: snapshot.data![index].name,
                         location: snapshot.data![index].location,
                         rating: snapshot.data![index].rating,
+                        destinationId: snapshot.data![index].id,
                       ),
                     );
                   },
