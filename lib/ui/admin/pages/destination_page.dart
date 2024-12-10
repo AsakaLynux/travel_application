@@ -48,6 +48,7 @@ class DestinationPage extends StatelessWidget {
                       location: snapshot.data![index].location,
                       rating: snapshot.data![index].rating,
                       destinationId: snapshot.data![index].id,
+                      admin: true,
                     ),
                   );
                 },

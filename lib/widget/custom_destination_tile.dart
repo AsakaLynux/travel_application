@@ -72,34 +72,36 @@ class CustomDestinationTile extends StatelessWidget {
                     )
                   ],
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    DestinationServices destinationServices =
-                        DestinationServices();
-                    bool deleteDestination = await destinationServices
-                        .deleteDestination(destinationId);
-                    if (deleteDestination) {
-                      Fluttertoast.showToast(
-                        msg: "Success Delete Destination",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: kWhiteColor,
-                        textColor: kBlackColor,
-                        fontSize: 16.0,
-                      );
-                    } else {
-                      Fluttertoast.showToast(
-                        msg: "Failed Delete Destination",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: kWhiteColor,
-                        textColor: kBlackColor,
-                        fontSize: 16.0,
-                      );
-                    }
-                  },
-                  child: const Icon(Icons.delete_outline),
-                ),
+                admin
+                    ? GestureDetector(
+                        onTap: () async {
+                          DestinationServices destinationServices =
+                              DestinationServices();
+                          bool deleteDestination = await destinationServices
+                              .deleteDestination(destinationId);
+                          if (deleteDestination) {
+                            Fluttertoast.showToast(
+                              msg: "Success Delete Destination",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: kWhiteColor,
+                              textColor: kBlackColor,
+                              fontSize: 16.0,
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Failed Delete Destination",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: kWhiteColor,
+                              textColor: kBlackColor,
+                              fontSize: 16.0,
+                            );
+                          }
+                        },
+                        child: const Icon(Icons.delete_outline),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),
