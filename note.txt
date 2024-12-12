@@ -30,20 +30,23 @@ Developing
 Testing
     
     
-    - if transaction price more than user balance then user can't do transaction
-    - Create wallet system
-        - Make user isar function to add wallet        
-    - Create admin page:
-        - Destination
-            - Make delete destination isar function (using trash icon in destination tile)
+    
+            
+    
 
 Bug Fixing
     - When user want to close the application at home page, it will have confirmation
-  
-
-
+    - When user checkout and not fill the payment, there is error in program (add toast reminder to select payment)
+    - if transaction price more than user balance then user can't do transaction
+    - Pop for top up have a wrong size
+    - If user already input in form text field, the value remain for next input (The value must reset to empty)
+    - Create admin page:
+        - Destination
+            - Make delete destination isar function (using trash icon in destination tile) (When user delete destination, the destiantion not imidietly delete)
 
 Done
+    - Create wallet system
+        - Make user isar function to add wallet
     - When i choose seat like said A1, B2. then i click back button, the state of seat that i choose still remaining. Because of that, when i choose the other destination, the state still there
     - correcting destiantion image widget after change call method
     - Create wallet system
