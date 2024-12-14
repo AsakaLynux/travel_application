@@ -293,7 +293,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
               onPressed: () async {
                 final userData = await userServices.getUser();
                 if (selectedPayment != null) {
-                  if (userData != null && userData.wallet < grandTotal) {
+                  if (userData != null && userData.wallet > grandTotal) {
                     final transaction =
                         await transactionServices.addTransaction(
                             amountOfTraveler,
