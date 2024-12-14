@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 
 import '../entities/destination.dart';
+import '../entities/transaction.dart';
 import 'isar_services.dart';
 
 class DestinationServices extends IsarServices {
@@ -210,8 +211,11 @@ class DestinationServices extends IsarServices {
 
   Future<bool> deleteDestination(Id destinationId) async {
     final isar = await db;
-
     await isar.writeTxn(() async {
+      await isar.transactions
+          .filter()
+          .destination((q) => q.idEqualTo(destinationId))
+          .deleteAll();
       await isar.destinations.delete(destinationId);
     });
 
