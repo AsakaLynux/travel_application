@@ -36,7 +36,6 @@ Testing
 
 Bug Fixing
     - When user want to close the application at home page, it will have confirmation
-    - When user checkout and not fill the payment, there is error in program (add toast reminder to select payment)
     - if transaction price more than user balance then user can't do transaction
     - Create admin page:
         - Destination
@@ -45,6 +44,7 @@ Bug Fixing
 
 
 Done
+    - When user checkout and not fill the payment, there is error in program (add toast reminder to select payment)
     - If user already input in form text field, the value remain for next input (The value must reset to empty)
     - Pop for top up have a wrong size
     - Create wallet system

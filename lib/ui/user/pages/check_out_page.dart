@@ -292,32 +292,44 @@ class _CheckOutPageState extends State<CheckOutPage> {
               width: 327,
               onPressed: () async {
                 final userData = await userServices.getUser();
-                final transaction = await transactionServices.addTransaction(
-                    amountOfTraveler,
-                    selectedSeat,
-                    insurance,
-                    refundable,
-                    vat,
-                    price,
-                    grandTotal,
-                    destinationId,
-                    selectedPayment!.name);
-                if (userData != null && userData.wallet < grandTotal) {
-                  if (transaction) {
-                    if (context.mounted) {
-                      Navigator.pushNamed(context, "/SuccessCheckOutPage");
+                if (selectedPayment != null) {
+                  if (userData != null && userData.wallet < grandTotal) {
+                    final transaction =
+                        await transactionServices.addTransaction(
+                            amountOfTraveler,
+                            selectedSeat,
+                            insurance,
+                            refundable,
+                            vat,
+                            price,
+                            grandTotal,
+                            destinationId,
+                            selectedPayment!.name);
+                    if (transaction) {
+                      if (context.mounted) {
+                        Navigator.pushNamed(context, "/SuccessCheckOutPage");
+                      }
+                      return Fluttertoast.showToast(
+                        msg: "Transaction Success",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: kWhiteColor,
+                        textColor: kBlackColor,
+                        fontSize: 16.0,
+                      );
+                    } else {
+                      return Fluttertoast.showToast(
+                        msg: "Transaction Failed",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: kWhiteColor,
+                        textColor: kBlackColor,
+                        fontSize: 16.0,
+                      );
                     }
-                    return Fluttertoast.showToast(
-                      msg: "Transaction Success",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      backgroundColor: kWhiteColor,
-                      textColor: kBlackColor,
-                      fontSize: 16.0,
-                    );
                   } else {
                     return Fluttertoast.showToast(
-                      msg: "Transaction Failed",
+                      msg: "You don't have enough money",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.BOTTOM,
                       backgroundColor: kWhiteColor,
@@ -327,7 +339,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   }
                 } else {
                   return Fluttertoast.showToast(
-                    msg: "You don't have enough money",
+                    msg: "Payment method cannot empty",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     backgroundColor: kWhiteColor,
