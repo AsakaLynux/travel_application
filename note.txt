@@ -35,7 +35,6 @@ Testing
     
 
 Bug Fixing
-    - When user want to close the application at home page, it will have confirmation
     - Create admin page:
         - Destination
             - Make delete destination isar function (using trash icon in destination tile) (When user delete destination, the destiantion not imidietly delete)
