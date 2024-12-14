@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import "../shared/theme.dart";
 
@@ -11,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final String? errorText;
   final Widget? suffixIcon;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     super.key,
@@ -22,6 +24,7 @@ class CustomTextField extends StatelessWidget {
     this.hintText,
     this.errorText,
     this.suffixIcon,
+    this.inputFormatters,
   });
 
   @override
@@ -44,6 +47,7 @@ class CustomTextField extends StatelessWidget {
             obscureText: obscureText,
             keyboardType: inputType,
             validator: validator,
+            inputFormatters: inputFormatters,
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: greyTextStyle,

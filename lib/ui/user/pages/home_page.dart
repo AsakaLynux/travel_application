@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:travel_application/model/sort_transaction_mode.dart';
 
@@ -51,6 +52,14 @@ class _HomePageState extends State<HomePage> {
         obscure = true;
       }
     });
+  }
+
+  void _controllerClear() {
+    nameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    hobbyController.clear();
+    balanceController.clear();
   }
 
   @override
@@ -560,8 +569,18 @@ class _HomePageState extends State<HomePage> {
                                           (Route<dynamic> route) => false,
                                         );
                                       }
+                                      _controllerClear();
                                       return Fluttertoast.showToast(
                                         msg: "Success Delete Account",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        backgroundColor: kWhiteColor,
+                                        textColor: kBlackColor,
+                                        fontSize: 16.0,
+                                      );
+                                    } else {
+                                      return Fluttertoast.showToast(
+                                        msg: "Failed Delete Account",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         backgroundColor: kWhiteColor,
@@ -593,6 +612,7 @@ class _HomePageState extends State<HomePage> {
                                           Navigator.pop(context);
                                         }
                                         userServices.showUser();
+                                        _controllerClear();
                                         return Fluttertoast.showToast(
                                           msg: "Success Update Account",
                                           toastLength: Toast.LENGTH_SHORT,
@@ -626,26 +646,32 @@ class _HomePageState extends State<HomePage> {
                             return showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                content: Form(
-                                  key: formBalanceKey,
-                                  child: CustomTextField(
-                                    titleText: "Balance",
-                                    controller: balanceController,
-                                    inputType: TextInputType.number,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Field can not empty";
-                                      } else {
-                                        return null;
-                                      }
-                                    },
+                                content: SizedBox(
+                                  height: 110,
+                                  child: Form(
+                                    key: formBalanceKey,
+                                    child: CustomTextField(
+                                      titleText: "Balance",
+                                      controller: balanceController,
+                                      inputType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Field can not empty";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ),
                                 title: const Text("Add money"),
                                 actions: [
                                   CustomButton(
                                     text: "Save",
-                                    width: 70,
+                                    width: 100,
                                     onPressed: () async {
                                       double balance = double.parse(
                                           balanceController.value.text);
@@ -678,25 +704,22 @@ class _HomePageState extends State<HomePage> {
                                           );
                                         }
                                       }
+                                      balanceController.clear();
                                     },
                                   ),
                                   CustomButton(
                                     text: "Close",
-                                    width: 70,
+                                    width: 100,
                                     backGroundColor: kRedColor,
-                                    onPressed: () => Navigator.pop(context),
+                                    onPressed: () {
+                                      balanceController.clear();
+                                      Navigator.pop(context);
+                                    },
                                   ),
                                 ],
+                                actionsAlignment: MainAxisAlignment.center,
                               ),
                             );
-                            // return Fluttertoast.showToast(
-                            //   msg: "Success Log Out Account",
-                            //   toastLength: Toast.LENGTH_SHORT,
-                            //   gravity: ToastGravity.BOTTOM,
-                            //   backgroundColor: kWhiteColor,
-                            //   textColor: kBlackColor,
-                            //   fontSize: 16.0,
-                            // );
                           },
                         ),
                         CustomButton(
@@ -768,6 +791,7 @@ class _HomePageState extends State<HomePage> {
             onDestinationSelected: (index) {
               setState(() {
                 currentPageIndex = index;
+                _controllerClear();
               });
             },
             labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
