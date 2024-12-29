@@ -8,7 +8,7 @@ A new Flutter project for completed Flutter appllication tutorial.
 * [Demo](#demo)
 
 ## General info
-This project is simple Lorem ipsum dolor generator.
+This project is simple Travel application that i following from BuildWithAngga [course](https://buildwithangga.com/kelas/welcome-course/mastering-flutter-20-membangun-aplikasi-travel-dan-pesawat).
 	
 ## Technologies
 Project is created with:
