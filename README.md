@@ -19,3 +19,6 @@ Project is created with:
 * Shared Preferences version: ^2.3.2
 
 ## Demo
+
+https://github.com/user-attachments/assets/dac67531-464a-4a6e-8192-9a8850d04613
+
